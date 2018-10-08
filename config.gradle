@@ -3,8 +3,8 @@ ext {
     isLib = true
 //    isLib = false
     //componment 工程中module是否为library
-    isComponmentLib = true
-//    isComponmentLib = false
+//    isComponmentLib = true
+    isComponmentLib = false
 
     applicationId = "com.ayvytr.gank"
 

@@ -6,21 +6,13 @@ import android.widget.TextView;
 
 import com.ayvytr.mvp.BaseMvpActivity;
 import com.ayvytr.mvp.R;
-import com.ayvytr.mvp.WeatherBeseEntity;
 import com.ayvytr.mvp.mvp.contract.MainContract;
 import com.ayvytr.mvp.mvp.presenter.MainPresenter;
-import com.ayvytr.network.ApiClient;
 
 public class MainActivity extends BaseMvpActivity<MainPresenter> implements MainContract.View {
 
     private TextView tv;
     private TextView tvWeather;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        ApiClient.getInstance().init();
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     protected MainPresenter getPresenter() {
@@ -55,9 +47,8 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     }
 
     @Override
-    public void showWeather(WeatherBeseEntity weatherBeseEntity) {
-        tvWeather.setText(weatherBeseEntity.getResult().get(0).getCity() + " " + weatherBeseEntity.getResult().get(0)
-                                                                                                  .getWeather());
+    public void showWeather(String weather) {
+        tvWeather.setText(weather);
     }
 
     @Override

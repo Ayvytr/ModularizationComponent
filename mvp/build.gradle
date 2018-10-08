@@ -32,13 +32,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation rootProject.ext.support.appcompat_v7
-    api rootProject.ext.dependencies.rxlifecycle2_components
+    implementation rootProject.ext.dependencies.rxlifecycle2_components
     implementation rootProject.ext.support.constraint
     implementation rootProject.ext.dependencies.logger
     implementation rootProject.ext.dependencies.butterknife
     annotationProcessor rootProject.ext.dependencies.butterknife_compiler
-
-    if(isLib) {
-        implementation project(":network")
-    }
+    implementation rootProject.ext.kotlin.easykotlin
 }

@@ -6,7 +6,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * @author admin
  */
-public abstract class ApiObserver<T> implements Observer<T> {
+public abstract class BaseObserver<T> implements Observer<T> {
     @Override
     public void onSubscribe(Disposable d) {
     }

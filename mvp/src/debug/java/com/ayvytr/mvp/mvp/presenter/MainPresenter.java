@@ -4,7 +4,6 @@ import com.ayvytr.logger.L;
 import com.ayvytr.mvp.BasePresenter;
 import com.ayvytr.mvp.RxLifecycleUtils;
 import com.ayvytr.mvp.RxSchedulers;
-import com.ayvytr.mvp.WeatherBeseEntity;
 import com.ayvytr.mvp.mvp.contract.MainContract;
 import com.ayvytr.mvp.mvp.model.MainModel;
 
@@ -50,12 +49,12 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
     public void getWeather() {
         mModel.getWeather()
-              .compose(RxLifecycleUtils.<WeatherBeseEntity>bindToLifecycle(mView))
-              .compose(RxSchedulers.<WeatherBeseEntity>applySchedulers(mView))
-              .subscribe(new Consumer<WeatherBeseEntity>() {
+              .compose(RxLifecycleUtils.<String>bindToLifecycle(mView))
+              .compose(RxSchedulers.<String>applySchedulers(mView))
+              .subscribe(new Consumer<String>() {
                   @Override
-                  public void accept(WeatherBeseEntity weatherBeseEntity) {
-                      mView.showWeather(weatherBeseEntity);
+                  public void accept(String weather) {
+                      mView.showWeather(weather);
                   }
               });
     }

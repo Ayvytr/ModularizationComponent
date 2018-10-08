@@ -1,22 +1,18 @@
 package com.ayvytr.mvp.mvp.model;
 
-import com.ayvytr.mvp.WeatherBeseEntity;
 import com.ayvytr.mvp.mvp.contract.MainContract;
-import com.ayvytr.mvp.mvp.model.bean.WeatherServer;
-import com.ayvytr.network.ApiClient;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 /**
  * @author admin
  */
 public class MainModel implements MainContract.Model {
-    private final WeatherServer weatherServer;
 
     public MainModel() {
-        weatherServer = ApiClient.getInstance().create(WeatherServer.class);
     }
 
     @Override
@@ -30,7 +26,13 @@ public class MainModel implements MainContract.Model {
     }
 
     @Override
-    public Observable<WeatherBeseEntity> getWeather() {
-        return weatherServer.getCityWeather("1c9dccb9a2434", "深圳", "广东");
+    public Observable<String> getWeather() {
+        return Observable.timer(3, TimeUnit.SECONDS)
+                .map(new Function<Long, String>() {
+                    @Override
+                    public String apply(Long aLong) {
+                        return "深圳天气：中雨";
+                    }
+                });
     }
 }
