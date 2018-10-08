@@ -1,5 +1,4 @@
-//def isLib = false
-if (isLib) {
+if (isComponmentLib) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
@@ -36,10 +35,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    if(isLib) {
-        implementation project(":commonlibrary")
-    }
     implementation rootProject.ext.dependencies.butterknife
     annotationProcessor rootProject.ext.dependencies.arouter_compiler
     annotationProcessor rootProject.ext.dependencies.butterknife_compiler
+    implementation rootProject.ext.dependencies.agentweb
 }

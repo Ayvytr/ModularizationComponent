@@ -1,5 +1,5 @@
 //def isLib = false
-if (isLib) {
+if (isComponmentLib) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'

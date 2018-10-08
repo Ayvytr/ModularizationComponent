@@ -2,6 +2,9 @@ ext {
     //module 作为组件/application存在
     isLib = true
 //    isLib = false
+    //componment 工程中module是否为library
+    isComponmentLib = true
+//    isComponmentLib = false
 
     applicationId = "com.ayvytr.gank"
 

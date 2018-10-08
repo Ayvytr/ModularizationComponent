@@ -1,1 +1,1 @@
-include ':app', ':commonlibrary', ':mvp', ':network', ':web'
+include ':mvp', ':network', ':web'
