@@ -20,7 +20,10 @@ public abstract class BaseMvpActivity<P extends IPresenter> extends RxAppCompatA
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getContentViewRes());
+        int contentViewRes = getContentViewRes();
+        if(contentViewRes > 0) {
+            setContentView(contentViewRes);
+        }
         ButterKnife.bind(this);
         mPresenter = getPresenter();
         initExtra();

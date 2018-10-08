@@ -26,6 +26,27 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            if (!isComponentLib) {
+                manifest.srcFile 'src/demo/AndroidManifest.xml'
+                // 合并 debug和main中的res
+                res.srcDirs = ['src/demo/res', 'src/main/res']
+                java.srcDirs = ['src/demo/java', 'src/main/java']
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                res.srcDirs = ['src/main/res']
+                java {
+                    //排除java/demo文件夹下的所有文件
+                    exclude 'src/demo/**'
+                }
+
+                resources {
+                    exclude 'src/demo/*'
+                }
+            }
+        }
+    }
 }
 
 dependencies {
