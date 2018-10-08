@@ -1,4 +1,4 @@
-if (isComponmentLib) {
+if (isComponentLib) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
