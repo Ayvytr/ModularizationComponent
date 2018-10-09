@@ -15,6 +15,8 @@
  */
 package com.ayvytr.mvp;
 
+import android.support.annotation.Nullable;
+
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -24,7 +26,15 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.trello.rxlifecycle2.internal.Preconditions;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * ================================================
@@ -36,9 +46,9 @@ import io.reactivex.annotations.NonNull;
  * ================================================
  */
 
-public class RxLifecycleUtils {
+public class RxUtils {
 
-    private RxLifecycleUtils() {
+    private RxUtils() {
         throw new IllegalStateException("you can't instantiate me!");
     }
 
@@ -67,10 +77,6 @@ public class RxLifecycleUtils {
 
     /**
      * 绑定 Activity/Fragment 的生命周期
-     *
-     * @param view
-     * @param <T>
-     * @return
      */
     public static <T> LifecycleTransformer<T> bindToLifecycle(@NonNull IView view) {
         Preconditions.checkNotNull(view, "lifecycleable == null");
@@ -81,5 +87,43 @@ public class RxLifecycleUtils {
         } else {
             throw new IllegalArgumentException("Lifecycle not match");
         }
+    }
+
+    /**
+     * 封装线程切换和loading显示
+     *
+     * @param view IView
+     * @param <T>  返回数据
+     * @return ObservableTransformer
+     */
+    @NonNull
+    public static <T> ObservableTransformer<T, T> applySchedulers(@Nullable final IView view) {
+        return new ObservableTransformer<T, T>() {
+            @Override
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream.subscribeOn(Schedulers.io())
+                               .doOnSubscribe(new Consumer<Disposable>() {
+                                   @Override
+                                   public void accept(Disposable disposable) {
+                                       // 显示loading
+                                       if(view != null) {
+                                           view.showLoading();
+                                       }
+                                   }
+                               })
+                               //设置doOnSubscribe对应的线程为主线程
+                               .subscribeOn(AndroidSchedulers.mainThread())
+                               .observeOn(AndroidSchedulers.mainThread())
+                               .doFinally(new Action() {
+                                   @Override
+                                   public void run() {
+                                       // 隐藏loading
+                                       if(view != null) {
+                                           view.hideLoading();
+                                       }
+                                   }
+                               });
+            }
+        };
     }
 }
