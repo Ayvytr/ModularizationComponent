@@ -60,4 +60,6 @@ dependencies {
     implementation rootProject.ext.kotlin.easykotlin
     implementation rootProject.ext.support.recyclerview
     implementation rootProject.ext.dependencies.smartrefresh
+
+    implementation project(':baseadapter')
 }

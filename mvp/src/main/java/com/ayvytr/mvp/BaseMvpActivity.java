@@ -16,9 +16,6 @@ import butterknife.ButterKnife;
 public abstract class BaseMvpActivity<P extends IPresenter> extends RxAppCompatActivity implements IView, IInit {
     protected P mPresenter;
 
-    //TODO: 分页支持
-    private int pageSize;
-    private int currentPage = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
