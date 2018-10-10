@@ -2,8 +2,7 @@ package com.ayvytr.mvp.mvp.presenter;
 
 import com.ayvytr.logger.L;
 import com.ayvytr.mvp.BasePresenter;
-import com.ayvytr.mvp.RxLifecycleUtils;
-import com.ayvytr.mvp.RxSchedulers;
+import com.ayvytr.mvp.RxUtils;
 import com.ayvytr.mvp.mvp.contract.MainContract;
 import com.ayvytr.mvp.mvp.model.MainModel;
 
@@ -21,8 +20,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
     public void getData() {
         mModel.getData()
-              .compose(RxLifecycleUtils.<Long>bindToLifecycle(mView))
-              .compose(RxSchedulers.<Long>applySchedulers(mView))
+              .compose(RxUtils.<Long>bindToLifecycle(mView))
+              .compose(RxUtils.<Long>applySchedulers(mView))
               .subscribe(new Observer<Long>() {
                   @Override
                   public void onSubscribe(Disposable d) {
@@ -49,8 +48,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
     public void getWeather() {
         mModel.getWeather()
-              .compose(RxLifecycleUtils.<String>bindToLifecycle(mView))
-              .compose(RxSchedulers.<String>applySchedulers(mView))
+              .compose(RxUtils.<String>bindToLifecycle(mView))
+              .compose(RxUtils.<String>applySchedulers(mView))
               .subscribe(new Consumer<String>() {
                   @Override
                   public void accept(String weather) {

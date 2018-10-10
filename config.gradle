@@ -3,8 +3,8 @@ ext {
     isLib = true
 //    isLib = false
     //component 工程中module是否为library
-//    isComponentLib = true
-    isComponentLib = false
+    isComponentLib = true
+//    isComponentLib = false
 
     applicationId = "com.ayvytr.gank"
 
@@ -77,6 +77,8 @@ ext {
             logger                    : "com.ayvytr:logger:3.0.0",
 
             agentweb                  : "com.just.agentweb:agentweb:4.0.2",
+
+            smartrefresh              : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14",
     ]
 
     ext.anko_version = '0.10.6'

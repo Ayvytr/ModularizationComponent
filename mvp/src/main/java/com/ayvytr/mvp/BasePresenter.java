@@ -17,21 +17,21 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
      * 如果当前页面同时需要 Model 层和 View 层,则使用此构造函数(默认)
      *
      * @param model
-     * @param rootView
+     * @param view
      */
-    public BasePresenter(@NonNull M model, @NonNull V rootView) {
+    public BasePresenter(@NonNull M model, @NonNull V view) {
         this.mModel = model;
-        this.mView = rootView;
+        this.mView = view;
         onCreate();
     }
 
     /**
      * 如果当前页面不需要操作数据,只需要 View 层,则使用此构造函数
      *
-     * @param rootView
+     * @param view
      */
-    public BasePresenter(@NonNull V rootView) {
-        this.mView = rootView;
+    public BasePresenter(@NonNull V view) {
+        this.mView = view;
         onCreate();
     }
 

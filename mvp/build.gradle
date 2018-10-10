@@ -1,4 +1,3 @@
-//def isLib = false
 if (isComponentLib) {
     apply plugin: 'com.android.library'
 } else {
@@ -59,4 +58,6 @@ dependencies {
     implementation rootProject.ext.dependencies.butterknife
     annotationProcessor rootProject.ext.dependencies.butterknife_compiler
     implementation rootProject.ext.kotlin.easykotlin
+    implementation rootProject.ext.support.recyclerview
+    implementation rootProject.ext.dependencies.smartrefresh
 }

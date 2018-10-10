@@ -3,7 +3,6 @@ package com.ayvytr.mvp;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -16,6 +15,10 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseMvpActivity<P extends IPresenter> extends RxAppCompatActivity implements IView, IInit {
     protected P mPresenter;
+
+    //TODO: 分页支持
+    private int pageSize;
+    private int currentPage = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,16 +53,15 @@ public abstract class BaseMvpActivity<P extends IPresenter> extends RxAppCompatA
         return this;
     }
 
-    public void toast(String msg) {
-        Toast.makeText(BaseMvpActivity.this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public void toast(@StringRes int id) {
-        Toast.makeText(BaseMvpActivity.this, id, Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void showMessage(String message) {
+        Toast.makeText(BaseMvpActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showMessage(int stringId) {
+        Toast.makeText(BaseMvpActivity.this, stringId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
