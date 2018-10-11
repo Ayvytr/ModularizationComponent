@@ -22,9 +22,11 @@ import java.util.List;
 public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int ITEM_TYPE_EMPTY = Integer.MAX_VALUE - 1;
 
-    private CommonAdapter<T> mInnerAdapter;
-    private View mEmptyView;
+    //    private View mEmptyView;
     private int mEmptyLayoutId;
+
+    protected CommonAdapter<T> mInnerAdapter;
+    protected Context mContext;
 
 
 //    public EmptyWrapperAdapter(RecyclerView.Adapter adapter) {
@@ -36,6 +38,7 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
     }
 
     public EmptyWrapperAdapter(Context context, @LayoutRes int layoutResId, List<T> list) {
+        mContext = context;
         mInnerAdapter = new CommonAdapter<T>(context, layoutResId, list) {
             @Override
             protected void convert(ViewHolder holder, T t, int position) {
@@ -50,18 +53,20 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
         return mInnerAdapter;
     }
 
-    private boolean isEmpty() {
-        return (mEmptyView != null || mEmptyLayoutId != 0) && mInnerAdapter.getItemCount() == 0;
+    public boolean isEmpty() {
+//        return (mEmptyView != null || mEmptyLayoutId != 0) && mInnerAdapter.getItemCount() == 0;
+        return mInnerAdapter.getItemCount() == 0;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(isEmpty()) {
-            ViewHolder holder;
-            if(mEmptyView != null) {
-                holder = ViewHolder.createViewHolder(parent.getContext(), mEmptyView);
-            } else {
-                holder = ViewHolder.createViewHolder(parent.getContext(), parent, mEmptyLayoutId);
+            ViewHolder holder = ViewHolder.createViewHolder(parent.getContext(), parent, mEmptyLayoutId);
+
+            //TODO 修改优化
+            //如果View为空提供空View
+            if(holder.itemView == null) {
+                holder = ViewHolder.createViewHolder(parent.getContext(), new View(mContext));
             }
             return holder;
         }
@@ -110,49 +115,84 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
         mInnerAdapter.onBindViewHolder((ViewHolder) holder, position);
     }
 
+    /**
+     * 如果 {@link #mInnerAdapter} 为空，获取的数量为1，需要配合 {@link #isEmpty()} 判断 {@link #mInnerAdapter} 的数据数量.
+     * 必须这样写，不然空视图无法加载.
+     * <p>
+     * 可以使用如下方法直接获取数量:
+     *
+     * @see #getItemCountOuter()
+     * @see #mInnerAdapter#getItemCount()
+     */
     @Override
     public int getItemCount() {
-        if(isEmpty()) return 1;
+        if(isEmpty()) {
+            return 1;
+        }
         return mInnerAdapter.getItemCount();
     }
 
-
-    public void setEmptyView(View emptyView) {
-        mEmptyView = emptyView;
+    public int getItemCountOuter() {
+        return mInnerAdapter.getItemCount();
     }
+
+//    public void setEmptyView(View emptyView) {
+//        mEmptyView = emptyView;
+//    }
 
     public void setEmptyView(int layoutId) {
         mEmptyLayoutId = layoutId;
     }
 
     public void updateList(List<T> list) {
-        mInnerAdapter.updateList(list == null ? new ArrayList<T>(0) : list);
+        //TODO 解决闪烁问题
         notifyDataSetChanged();
+        mInnerAdapter.updateList(list == null ? new ArrayList<T>(0) : list);
     }
 
     public void addList(List<T> list) {
+//        notifyDataSetChanged();
         mInnerAdapter.addList(list);
-        notifyDataSetChanged();
+//        notifyItemRangeChanged(0, getItemCount());
     }
 
     public void addList(int index, List<T> list) {
+//        notifyDataSetChanged();
         mInnerAdapter.addList(index, list);
-        notifyDataSetChanged();
+//        notifyItemRangeChanged(0, getItemCount());
     }
 
     public void remove(T t) {
+//        notifyDataSetChanged();
         mInnerAdapter.remove(t);
-        notifyDataSetChanged();
+
+        if(isEmpty()) {
+            notifyDataSetChanged();
+        }
+//        } else {
+//            notifyItemRangeChanged(0, getItemCount());
+//        }
     }
 
     public void remove(int index) {
+//        notifyDataSetChanged();
         mInnerAdapter.remove(index);
-        notifyDataSetChanged();
+
+//        if(isEmpty()) {
+//            notifyDataSetChanged();
+//        } else {
+//            notifyItemRangeChanged(0, getItemCount());
+//        }
     }
 
     public void clear() {
+//        notifyDataSetChanged();
         mInnerAdapter.clear();
         notifyDataSetChanged();
+    }
+
+    public CommonAdapter<T> getInnerAdapter() {
+        return mInnerAdapter;
     }
 
     public void setOnItemClickListener(MultiItemTypeAdapter.OnItemClickListener l) {

@@ -16,14 +16,15 @@ import java.util.List;
 /**
  * @author admin
  */
-public abstract class BaseListFragment<P extends IPresenter> extends BaseMvpFragment<P> implements OnRefreshLoadMoreListener {
+public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpFragment<P>
+        implements OnRefreshLoadMoreListener {
 
     protected int currentPage = 1;
     protected int pageSize = 10;
 
     protected RecyclerView mRvList;
     protected SmartRefreshLayout mSmartRefreshLayout;
-    protected EmptyWrapperAdapter mAdapter;
+    protected EmptyWrapperAdapter<T> mAdapter;
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
@@ -44,27 +45,47 @@ public abstract class BaseListFragment<P extends IPresenter> extends BaseMvpFrag
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        resetPage();
     }
 
-    public void updateList(List list) {
+    public void updateList(List<T> list) {
+
         if(mAdapter == null) {
             return;
         }
 
-        if(list == null) {
-            list = new ArrayList();
+        if(list == null || list.isEmpty()) {
+            list = new ArrayList<>();
         }
 
         if(currentPage == 1) {
             mAdapter.updateList(list);
+            //TODO 考虑是否添加这个。按常理应该是没数据不应该上拉加载更多
+//            int height = mSmartRefreshLayout.getRefreshFooter().getView().getHeight();
+//            mRvList.scrollBy(0, -height);
         } else {
             mAdapter.addList(list);
         }
 
-        currentPage++;
+        //没有数据不应该增长currentPage
+        //TODO 审核什么时候不应该增长currentPage
+        if(!list.isEmpty()) {
+            currentPage++;
+        }
 
-        mSmartRefreshLayout.setEnableLoadMore(list.size() == pageSize);
+        finishRefreshLoadMore();
+        mSmartRefreshLayout.finishLoadMore(0, true, list.size() != pageSize);
+    }
+
+    private void finishRefreshLoadMore() {
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
+    }
+
+    /**
+     * 刷新列表/重新从第1页开始时调用
+     */
+    public void resetPage() {
+        currentPage = 1;
     }
 }

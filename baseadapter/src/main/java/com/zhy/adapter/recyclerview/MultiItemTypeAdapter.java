@@ -33,7 +33,9 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if(!useItemViewDelegateManager()) return super.getItemViewType(position);
+        if(!useItemViewDelegateManager()) {
+            return super.getItemViewType(position);
+        }
         return mItemViewDelegateManager.getItemViewType(mDatas.get(position), position);
     }
 
@@ -42,8 +44,7 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemViewDelegate itemViewDelegate = mItemViewDelegateManager.getItemViewDelegate(viewType);
         int layoutId = itemViewDelegate.getItemViewLayoutId();
-        ViewHolder holder = ViewHolder.createViewHolder(mContext, parent, layoutId);
-        return holder;
+        return ViewHolder.createViewHolder(mContext, parent, layoutId);
     }
 
     public void convert(ViewHolder holder, T t) {
@@ -81,8 +82,7 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public int getItemCount() {
-        int itemCount = mDatas.size();
-        return itemCount;
+        return mDatas.size();
     }
 
 
@@ -106,36 +106,42 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
     public void updateList(List<T> list) {
         mDatas = list == null ? new ArrayList<T>(0) : list;
-        notifyDataSetChanged();
+        notifyItemRangeInserted(0, mDatas.size());
+//        notifyDataSetChanged();
     }
 
     public void addList(List<T> list) {
         if(list != null) {
+            int startIndex = mDatas.size();
             mDatas.addAll(list);
-            notifyDataSetChanged();
+            notifyItemRangeInserted(startIndex, mDatas.size());
         }
     }
 
     public void addList(int index, List<T> list) {
         if(list != null) {
             mDatas.addAll(index, list);
-            notifyDataSetChanged();
+            notifyItemRangeInserted(index, list.size());
         }
     }
 
     public void remove(T t) {
-        mDatas.remove(t);
-        notifyDataSetChanged();
+        int position = mDatas.indexOf(t);
+        boolean succeed = mDatas.remove(t);
+        if(succeed) {
+            notifyItemRemoved(position);
+        }
     }
 
     public void remove(int index) {
         mDatas.remove(index);
-        notifyDataSetChanged();
+        notifyItemRemoved(index);
     }
 
     public void clear() {
+        int size = mDatas.size();
         mDatas.clear();
-        notifyDataSetChanged();
+        notifyItemRangeRemoved(0, size);
     }
 
     public T getItemAt(int position) {

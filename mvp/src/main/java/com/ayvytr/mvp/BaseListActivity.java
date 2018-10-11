@@ -16,14 +16,15 @@ import java.util.List;
 /**
  * @author admin
  */
-public abstract class BaseListActivity<P extends IPresenter> extends BaseMvpActivity<P>
+public abstract class BaseListActivity<P extends IPresenter, T> extends BaseMvpActivity<P>
         implements OnRefreshLoadMoreListener {
     protected int currentPage = 1;
     protected int pageSize = 10;
 
     protected RecyclerView mRvList;
     protected SmartRefreshLayout mSmartRefreshLayout;
-    protected EmptyWrapperAdapter mAdapter;
+    protected EmptyWrapperAdapter<T> mAdapter;
+
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
@@ -44,26 +45,39 @@ public abstract class BaseListActivity<P extends IPresenter> extends BaseMvpActi
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        resetPage();
     }
 
-    public void updateList(List list) {
+    private void resetPage() {
+        currentPage = 1;
+    }
+
+    public void updateList(List<T> list) {
         if(mAdapter == null) {
             return;
         }
 
         if(list == null) {
-            list = new ArrayList();
+            list = new ArrayList<>();
         }
 
         if(currentPage == 1) {
             mAdapter.updateList(list);
+            //TODO 考虑是否添加这个。按常理应该是没数据不应该上拉加载更多
+//            mRvList.scrollBy(0, -mSmartRefreshLayout.getRefreshFooter().getView().getHeight());
         } else {
             mAdapter.addList(list);
         }
 
-        currentPage++;
+        if(!list.isEmpty()) {
+            currentPage++;
+        }
 
-        mSmartRefreshLayout.setEnableLoadMore(list.size() == pageSize);
+        finishRefreshLoadMore();
+        mSmartRefreshLayout.finishLoadMore(0, true, list.size() != pageSize);
+    }
+
+    private void finishRefreshLoadMore() {
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
     }
