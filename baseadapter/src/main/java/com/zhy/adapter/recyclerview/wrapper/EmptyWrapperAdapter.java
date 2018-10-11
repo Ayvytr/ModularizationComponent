@@ -202,4 +202,8 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
     public T getItemAt(int position) {
         return mInnerAdapter.getItemAt(position);
     }
+
+    public List<T> getDatas() {
+        return mInnerAdapter.getDatas();
+    }
 }

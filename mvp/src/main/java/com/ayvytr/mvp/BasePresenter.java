@@ -5,7 +5,7 @@ import io.reactivex.annotations.NonNull;
 /**
  * @author ayvytr
  */
-public class BasePresenter<M extends IModel, V extends IView> implements IPresenter{
+public class BasePresenter<M extends IModel, V extends IView> implements IPresenter {
     protected M mModel;
     protected V mView;
 
@@ -48,4 +48,9 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         }
     }
 
+    public void handlerErrorMessage(String errorMsg) {
+        if(mView != null) {
+            mView.showMessage(errorMsg);
+        }
+    }
 }
