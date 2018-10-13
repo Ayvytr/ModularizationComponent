@@ -61,13 +61,13 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(isEmpty()) {
-            ViewHolder holder = ViewHolder.createViewHolder(parent.getContext(), parent, mEmptyLayoutId);
-
-            //TODO 修改优化
-            //如果View为空提供空View
-            if(holder.itemView == null) {
+            ViewHolder holder;
+            if(mEmptyLayoutId == 0) {
                 holder = ViewHolder.createViewHolder(parent.getContext(), new View(mContext));
+            } else {
+                holder = ViewHolder.createViewHolder(parent.getContext(), parent, mEmptyLayoutId);
             }
+
             return holder;
         }
         return mInnerAdapter.onCreateViewHolder(parent, viewType);
