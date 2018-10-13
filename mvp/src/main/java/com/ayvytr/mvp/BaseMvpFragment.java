@@ -19,6 +19,7 @@ import butterknife.Unbinder;
 public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
         implements IView, IInit{
     protected View mContentView;
+    protected boolean isViewCreated;
 
     protected P mPresenter;
     protected Unbinder mUnbinder;
@@ -38,6 +39,7 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        isViewCreated = true;
         mPresenter = getPresenter();
         mUnbinder = ButterKnife.bind(this, view);
         initExtra();
@@ -50,6 +52,7 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        isViewCreated = false;
         if(mUnbinder != null) {
             mUnbinder.unbind();
         }
