@@ -1,12 +1,18 @@
 package com.ayvytr.network;
 
+import android.content.Context;
+
 import com.ayvytr.okhttploginterceptor.LoggingInterceptor;
 import com.ayvytr.okhttploginterceptor.LoggingLevel;
 import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,7 +31,7 @@ public class ApiClient {
         return SingletonHolder.NETWORK;
     }
 
-    public void init() {
+    public void init(final Context context) {
         gson = new Gson();
         loggingInterceptor = new LoggingInterceptor();
         loggingInterceptor.setLevel(LoggingLevel.URL_BODY);
@@ -33,6 +39,17 @@ public class ApiClient {
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        //TODO 确认请求是否已经终止
+                        if(!NetworkUtils.isAvailable(context.getApplicationContext())) {
+                            throw new UnknownHostException("Network not available");
+                        }
+
+                        return chain.proceed(chain.request());
+                    }
+                })
                 .addInterceptor(loggingInterceptor)
                 .build();
         retrofit = new Retrofit.Builder()

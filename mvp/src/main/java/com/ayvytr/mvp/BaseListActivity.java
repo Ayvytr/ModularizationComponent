@@ -77,7 +77,7 @@ public abstract class BaseListActivity<P extends IPresenter, T> extends BaseMvpA
         mSmartRefreshLayout.finishLoadMore(0, true, list.size() != pageSize);
     }
 
-    private void finishRefreshLoadMore() {
+    public void finishRefreshLoadMore() {
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
     }

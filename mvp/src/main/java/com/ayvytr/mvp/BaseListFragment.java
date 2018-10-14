@@ -77,7 +77,7 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
         mSmartRefreshLayout.finishLoadMore(0, true, list.size() != pageSize);
     }
 
-    private void finishRefreshLoadMore() {
+    public void finishRefreshLoadMore() {
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
     }
