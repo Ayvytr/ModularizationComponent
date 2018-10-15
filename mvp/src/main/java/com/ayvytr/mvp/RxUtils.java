@@ -29,6 +29,7 @@ import com.trello.rxlifecycle2.internal.Preconditions;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -123,6 +124,21 @@ public class RxUtils {
                                        }
                                    }
                                });
+            }
+        };
+    }
+
+    /**
+     * 全程都在指定线程执行的变换操作
+     *
+     * @param scheduler {@link Scheduler}
+     */
+    public static <T> ObservableTransformer<T, T> ofScheduler(final Scheduler scheduler) {
+        return new ObservableTransformer<T, T>() {
+            @Override
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream.subscribeOn(scheduler)
+                               .observeOn(scheduler);
             }
         };
     }
