@@ -82,6 +82,18 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
         mSmartRefreshLayout.finishLoadMore();
     }
 
+    @Override
+    public void showMessage(int stringId) {
+        super.showMessage(stringId);
+        finishRefreshLoadMore();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        super.showMessage(message);
+        finishRefreshLoadMore();
+    }
+
     /**
      * 刷新列表/重新从第1页开始时调用
      */
