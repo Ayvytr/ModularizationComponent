@@ -40,4 +40,5 @@ dependencies {
     api rootProject.ext.dependencies.okhttploginterceptor
     api rootProject.ext.dependencies.rxjava2
     api rootProject.ext.dependencies.rxjava2_android
+    api rootProject.ext.dependencies.logger
 }
