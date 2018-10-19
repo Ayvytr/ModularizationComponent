@@ -73,6 +73,10 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
             currentPage++;
         }
 
+        if(mAdapter.isEmpty()) {
+            showEmpty();
+        }
+
         finishRefreshLoadMore();
         mSmartRefreshLayout.finishLoadMore(0, true, list.size() != pageSize);
     }
@@ -83,15 +87,23 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
     }
 
     @Override
-    public void showMessage(int stringId) {
-        super.showMessage(stringId);
+    public void showError(int stringId) {
         finishRefreshLoadMore();
+        if(mAdapter.isEmpty()) {
+            mAdapter.showError(getContext().getString(stringId));
+        } else {
+            super.showError(stringId);
+        }
     }
 
     @Override
-    public void showMessage(String message) {
-        super.showMessage(message);
+    public void showError(String errorMsg) {
         finishRefreshLoadMore();
+        if(mAdapter.isEmpty()) {
+            mAdapter.showError(errorMsg);
+        } else {
+            super.showError(errorMsg);
+        }
     }
 
     /**

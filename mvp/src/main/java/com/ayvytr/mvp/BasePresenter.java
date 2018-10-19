@@ -50,7 +50,7 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
 
     public void handlerErrorMessage(String errorMsg) {
         if(mView != null) {
-            mView.showMessage(errorMsg);
+            mView.showError(errorMsg);
         }
     }
 }

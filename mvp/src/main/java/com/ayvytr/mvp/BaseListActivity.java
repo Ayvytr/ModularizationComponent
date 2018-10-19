@@ -78,15 +78,28 @@ public abstract class BaseListActivity<P extends IPresenter, T> extends BaseMvpA
     }
 
     @Override
-    public void showMessage(int stringId) {
-        super.showMessage(stringId);
-        finishRefreshLoadMore();
+    public void showLoading() {
+        mAdapter.showLoading();
     }
 
     @Override
-    public void showMessage(String message) {
-        super.showMessage(message);
+    public void showError(int stringId) {
         finishRefreshLoadMore();
+        if(mAdapter.isEmpty()) {
+            mAdapter.showError(getContext().getString(stringId));
+        } else {
+            super.showError(stringId);
+        }
+    }
+
+    @Override
+    public void showError(String errorMsg) {
+        finishRefreshLoadMore();
+        if(mAdapter.isEmpty()) {
+            mAdapter.showError(errorMsg);
+        } else {
+            super.showError(errorMsg);
+        }
     }
 
     public void finishRefreshLoadMore() {

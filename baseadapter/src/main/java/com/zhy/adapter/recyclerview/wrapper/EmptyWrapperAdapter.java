@@ -2,11 +2,13 @@ package com.zhy.adapter.recyclerview.wrapper;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import com.ayvytr.customview.loading.StatusView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -23,15 +25,12 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
     public static final int ITEM_TYPE_EMPTY = Integer.MAX_VALUE - 1;
 
     //    private View mEmptyView;
-    private int mEmptyLayoutId;
+//    private int mEmptyLayoutId;
+    private StatusView statusView;
 
     protected CommonAdapter<T> mInnerAdapter;
     protected Context mContext;
 
-
-//    public EmptyWrapperAdapter(RecyclerView.Adapter adapter) {
-//        mInnerAdapter = adapter;
-//    }
 
     public EmptyWrapperAdapter(Context context, @LayoutRes int layoutResId) {
         this(context, layoutResId, new ArrayList<T>(0));
@@ -45,6 +44,10 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
                 EmptyWrapperAdapter.this.convert(holder, t, position);
             }
         };
+        this.statusView = new StatusView(mContext);
+        //加LayoutParams是因为StatusView在父布局左上角
+        statusView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     public abstract void convert(ViewHolder holder, T t, int position);
@@ -62,11 +65,11 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(isEmpty()) {
             ViewHolder holder;
-            if(mEmptyLayoutId == 0) {
-                holder = ViewHolder.createViewHolder(parent.getContext(), new View(mContext));
-            } else {
-                holder = ViewHolder.createViewHolder(parent.getContext(), parent, mEmptyLayoutId);
-            }
+//            if(mEmptyLayoutId == 0) {
+            holder = ViewHolder.createViewHolder(parent.getContext(), statusView);
+//            } else {
+//                holder = ViewHolder.createViewHolder(parent.getContext(), parent, statusView);
+//            }
 
             return holder;
         }
@@ -140,9 +143,9 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
 //        mEmptyView = emptyView;
 //    }
 
-    public void setEmptyView(int layoutId) {
-        mEmptyLayoutId = layoutId;
-    }
+//    public void setEmptyView(int layoutId) {
+//        mEmptyLayoutId = layoutId;
+//    }
 
     public void updateList(List<T> list) {
         //TODO 解决闪烁问题
@@ -205,5 +208,37 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
 
     public List<T> getDatas() {
         return mInnerAdapter.getDatas();
+    }
+
+    public void showEmpty() {
+        statusView.showEmpty();
+    }
+
+    public void showEmpty(String msg) {
+        statusView.showEmpty(msg);
+    }
+
+    public void showLoading() {
+        statusView.showLoading();
+    }
+
+    public void showLoading(String msg) {
+        statusView.showLoading(msg);
+    }
+
+    public void showError() {
+        statusView.showError();
+    }
+
+    public void showError(String msg) {
+        statusView.showError(msg);
+    }
+
+    public StatusView getStatusView() {
+        return statusView;
+    }
+
+    public void setStatusView(@NonNull StatusView statusView) {
+        this.statusView = statusView;
     }
 }

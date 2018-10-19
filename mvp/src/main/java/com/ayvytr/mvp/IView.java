@@ -14,4 +14,10 @@ public interface IView {
     void showLoading();
 
     void hideLoading();
+
+    void showError(String errorMsg);
+
+    void showError(@StringRes int stringId);
+
+    void showEmpty();
 }

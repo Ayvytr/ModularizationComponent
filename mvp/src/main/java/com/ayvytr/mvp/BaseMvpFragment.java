@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.ayvytr.easykotlin.context.ToastKt;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.ButterKnife;
@@ -17,7 +17,7 @@ import butterknife.Unbinder;
  * @author admin
  */
 public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
-        implements IView, IInit{
+        implements IView, IInit {
     protected View mContentView;
     protected boolean isViewCreated;
 
@@ -69,12 +69,12 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        ToastKt.toast(getContext(), message);
     }
 
     @Override
     public void showMessage(int stringId) {
-        Toast.makeText(getContext(), stringId, Toast.LENGTH_SHORT).show();
+        ToastKt.toast(getContext(), stringId);
     }
 
     @Override
@@ -83,5 +83,20 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
 
     @Override
     public void hideLoading() {
+    }
+
+    @Override
+    public void showError(String errorMsg) {
+        ToastKt.toast(getContext(), errorMsg);
+    }
+
+    @Override
+    public void showError(int stringId) {
+        ToastKt.toast(getContext(), stringId);
+    }
+
+    @Override
+    public void showEmpty() {
+
     }
 }
