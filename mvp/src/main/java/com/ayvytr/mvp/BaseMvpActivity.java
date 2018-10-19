@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 
+import com.ayvytr.customview.loading.StatusView;
 import com.ayvytr.easykotlin.context.ToastKt;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
@@ -16,19 +18,35 @@ import butterknife.ButterKnife;
 public abstract class BaseMvpActivity<P extends IPresenter> extends RxAppCompatActivity implements IView, IInit {
     protected P mPresenter;
 
+    /**
+     * 一定要判空
+     */
+    @Nullable
+    protected StatusView mStatusView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int contentViewRes = getContentViewRes();
         if(contentViewRes > 0) {
-            setContentView(contentViewRes);
+            if(useStatusView()) {
+                mStatusView = new StatusView(getContext());
+                mStatusView.setContentView(LayoutInflater.from(getContext()).inflate(contentViewRes, null));
+                setContentView(mStatusView);
+            } else {
+                setContentView(contentViewRes);
+            }
         }
         ButterKnife.bind(this);
         mPresenter = getPresenter();
         initExtra();
         initView(savedInstanceState);
         initData(savedInstanceState);
+    }
+
+    @Override
+    public boolean useStatusView() {
+        return false;
     }
 
     protected abstract P getPresenter();

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ayvytr.customview.loading.StatusView;
 import com.ayvytr.easykotlin.context.ToastKt;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
@@ -22,7 +23,11 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
     protected boolean isViewCreated;
 
     protected P mPresenter;
+
+    protected StatusView mStatusView;
+
     protected Unbinder mUnbinder;
+
 
     @Nullable
     @Override
@@ -30,7 +35,12 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
                              @Nullable Bundle savedInstanceState) {
         int contentViewRes = getContentViewRes();
         if(contentViewRes > 0) {
-            mContentView = inflater.inflate(contentViewRes, container, false);
+            if(useStatusView()) {
+                mStatusView = new StatusView(getContext());
+                mStatusView.setContentView(LayoutInflater.from(getContext()).inflate(contentViewRes, null));
+            } else {
+                mContentView = inflater.inflate(contentViewRes, container, false);
+            }
         }
 
         return mContentView;
@@ -45,6 +55,11 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
         initExtra();
         initView(savedInstanceState);
         initData(savedInstanceState);
+    }
+
+    @Override
+    public boolean useStatusView() {
+        return false;
     }
 
     protected abstract P getPresenter();
