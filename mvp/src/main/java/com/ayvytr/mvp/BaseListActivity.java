@@ -48,7 +48,7 @@ public abstract class BaseListActivity<P extends IPresenter, T> extends BaseMvpA
         resetPage();
     }
 
-    private void resetPage() {
+    protected void resetPage() {
         currentPage = 1;
     }
 

@@ -106,8 +106,11 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
     public void updateList(List<T> list) {
         mDatas = list == null ? new ArrayList<T>(0) : list;
-        notifyItemRangeInserted(0, mDatas.size());
-//        notifyDataSetChanged();
+        if(mDatas.isEmpty()) {
+            notifyDataSetChanged();
+        } else {
+            notifyItemRangeInserted(0, mDatas.size());
+        }
     }
 
     public void addList(List<T> list) {
