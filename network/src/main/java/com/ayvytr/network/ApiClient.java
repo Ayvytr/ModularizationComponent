@@ -1,6 +1,7 @@
 package com.ayvytr.network;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.ayvytr.logger.L;
 import com.ayvytr.okhttploginterceptor.LoggingInterceptor;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -32,20 +34,27 @@ public class ApiClient {
     }
 
     public void init(final Context context) {
+        init(context, null);
+    }
+
+    public void init(final Context context, @Nullable Interceptor interceptor) {
         gson = new Gson();
         loggingInterceptor = new LoggingInterceptor();
         loggingInterceptor.setLevel(LoggingLevel.SINGLE);
         L.e(context.getCacheDir(), context.getExternalCacheDir());
         Cache cache = new Cache(new File(context.getExternalCacheDir(), "okhttp"), 1024 * 1024 * 1024 * 64L);
-        okHttpClient = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .cache(cache)
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(new CacheInterceptor(context))
                 .addNetworkInterceptor(new CacheNetworkInterceptor())
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .build();
+                .writeTimeout(10, TimeUnit.SECONDS);
+        if(interceptor != null) {
+            builder.addInterceptor(interceptor);
+        }
+        okHttpClient = builder.build();
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(okHttpClient)
