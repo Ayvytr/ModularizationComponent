@@ -7,7 +7,7 @@ import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
 /**
- * Created by dhl on 2016/9/1.
+ * @author ayvytr
  */
 public class NetworkUtils {
 

@@ -7,7 +7,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * @author admin
+ * @author ayvytr
  */
 public class CacheNetworkInterceptor implements Interceptor {
     private int maxAge;

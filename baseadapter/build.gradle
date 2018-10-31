@@ -1,5 +1,9 @@
-apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'
+//if (isComponentLib) {
+//    apply plugin: 'com.novoda.bintray-release'
+    apply plugin: 'com.android.library'
+//} else {
+//    apply plugin: 'com.android.application'
+//}
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -23,12 +27,3 @@ dependencies {
     implementation rootProject.ext.dependencies.customviews
 }
 
-//publish {
-//    userOrg = 'hongyangandroid'
-//    groupId = 'com.zhy'
-//    artifactId = 'base-rvadapter'
-//    publishVersion = '3.0.3'
-//    desc = 'a easy adapter for recyclerview'
-//    website = 'https://github.com/hongyangAndroid/baseAdapter'
-//    licences = ['Apache-2.0']
-//}

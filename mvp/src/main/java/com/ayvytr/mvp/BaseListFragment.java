@@ -5,16 +5,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
+import com.ayvytr.baseadapter.wrapper.EmptyWrapperAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.zhy.adapter.recyclerview.wrapper.EmptyWrapperAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author admin
+ * @author ayvytr
  */
 public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpFragment<P>
         implements OnRefreshLoadMoreListener {

@@ -1,1 +1,1 @@
-include ':mvp', ':network', ':baseadapter'
+include ':mvp', ':network', ':base-adapter'

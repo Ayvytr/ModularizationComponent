@@ -38,6 +38,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
+ * @author ayvytr
  * ================================================
  * 使用此类操作 RxLifecycle 的特性
  * <p>

@@ -1,7 +1,7 @@
 package com.ayvytr.mvp;
 
 /**
- * @author admin
+ * @author ayvytr
  */
 public interface IModel {
     void onDestroy();

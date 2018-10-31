@@ -7,6 +7,9 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 
 
+/**
+ * @author ayvytr
+ */
 public interface IInit {
 
     void initExtra();

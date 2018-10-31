@@ -3,7 +3,7 @@ package com.ayvytr.mvp;
 import android.support.annotation.StringRes;
 
 /**
- * @author admin
+ * @author ayvytr
  */
 public interface IView {
 

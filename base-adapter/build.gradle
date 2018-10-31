@@ -13,9 +13,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -29,25 +26,16 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation rootProject.ext.support.appcompat_v7
-    api rootProject.ext.dependencies.okhttp3
-    api rootProject.ext.dependencies.retrofit
-    api rootProject.ext.dependencies.retrofit_adapter_rxjava2
-    api rootProject.ext.dependencies.retrofit_converter_gson
-    api rootProject.ext.dependencies.retrofit_converter_scalars
-    api rootProject.ext.dependencies.okhttploginterceptor
-    api rootProject.ext.dependencies.rxjava2
-    api rootProject.ext.dependencies.rxjava2_android
-    api rootProject.ext.dependencies.logger
+    implementation rootProject.ext.support.recyclerview
+    implementation rootProject.ext.dependencies.customviews
 }
 
 publish {
     userOrg = 'ayvytr'
     groupId = 'com.ayvytr'
-    artifactId = 'network'
+    artifactId = 'base-adapter'
     publishVersion = '1.0.0'
-    desc = 'Network of OkHttp and Interceptors'
+    desc = 'An easy adapter for recyclerview'
     website = 'https://github.com/Ayvytr/ModularizationComponent'
     licences = ['Apache-2.0']
 }

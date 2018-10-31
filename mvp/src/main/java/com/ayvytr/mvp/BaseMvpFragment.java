@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * @author admin
+ * @author ayvytr
  */
 public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
         implements IView, IInit {

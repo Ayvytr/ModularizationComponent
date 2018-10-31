@@ -19,7 +19,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * @author admin
+ * @author ayvytr
  */
 public class ApiClient {
     private OkHttpClient okHttpClient;

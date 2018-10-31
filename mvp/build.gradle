@@ -1,9 +1,9 @@
 if (isComponentLib) {
+    apply plugin: 'com.novoda.bintray-release'
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
 }
-apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -62,5 +62,15 @@ dependencies {
     implementation rootProject.ext.dependencies.smartrefresh
     implementation rootProject.ext.dependencies.customviews
 
-    implementation project(':baseadapter')
+    implementation project(':base-adapter')
+}
+
+publish {
+    userOrg = 'ayvytr'
+    groupId = 'com.ayvytr'
+    artifactId = 'mvp'
+    publishVersion = '1.0.0'
+    desc = 'Mvp frame for Android'
+    website = 'https://github.com/Ayvytr/ModularizationComponent'
+    licences = ['Apache-2.0']
 }
