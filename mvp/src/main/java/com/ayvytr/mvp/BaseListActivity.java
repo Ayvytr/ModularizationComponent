@@ -63,8 +63,6 @@ public abstract class BaseListActivity<P extends IPresenter, T> extends BaseMvpA
 
         if(currentPage == 1) {
             mAdapter.updateList(list);
-            //TODO 考虑是否添加这个。按常理应该是没数据不应该上拉加载更多
-//            mRvList.scrollBy(0, -mSmartRefreshLayout.getRefreshFooter().getView().getHeight());
         } else {
             mAdapter.addList(list);
         }

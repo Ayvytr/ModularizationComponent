@@ -98,7 +98,7 @@ public class RxUtils {
      * @return ObservableTransformer
      */
     @NonNull
-    public static <T> ObservableTransformer<T, T> applySchedulers(@Nullable final IView view) {
+    public static <T> ObservableTransformer<T, T> subscribeIo(@Nullable final IView view) {
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {

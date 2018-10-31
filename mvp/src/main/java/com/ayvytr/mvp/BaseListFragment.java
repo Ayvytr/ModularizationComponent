@@ -60,15 +60,10 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
 
         if(currentPage == 1) {
             mAdapter.updateList(list);
-            //TODO 考虑是否添加这个。按常理应该是没数据不应该上拉加载更多
-//            int height = mSmartRefreshLayout.getRefreshFooter().getView().getHeight();
-//            mRvList.scrollBy(0, -height);
         } else {
             mAdapter.addList(list);
         }
 
-        //没有数据不应该增长currentPage
-        //TODO 审核什么时候不应该增长currentPage
         if(!list.isEmpty()) {
             currentPage++;
         }

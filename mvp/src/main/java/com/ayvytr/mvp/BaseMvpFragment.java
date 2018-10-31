@@ -24,9 +24,10 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
 
     protected P mPresenter;
 
-    protected StatusView mStatusView;
-
     protected Unbinder mUnbinder;
+
+    @Nullable
+    protected StatusView mStatusView;
 
 
     @Nullable

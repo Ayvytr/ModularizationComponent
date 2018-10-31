@@ -22,22 +22,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @author admin
  */
 public class ApiClient {
-    public static final String BASE_URL = "http://gank.io/api/";
     private OkHttpClient okHttpClient;
     private Retrofit retrofit;
     private LoggingInterceptor loggingInterceptor;
     private Gson gson;
 
-
     public static ApiClient getInstance() {
         return SingletonHolder.NETWORK;
     }
 
-    public void init(final Context context) {
-        init(context, null);
+    public void init(final Context context, String baseUrl) {
+        init(context, baseUrl, null);
     }
 
-    public void init(final Context context, @Nullable Interceptor interceptor) {
+    public void init(final Context context, String baseUrl, @Nullable Interceptor interceptor) {
         gson = new Gson();
         loggingInterceptor = new LoggingInterceptor();
         loggingInterceptor.setLevel(LoggingLevel.SINGLE);
@@ -56,7 +54,7 @@ public class ApiClient {
         }
         okHttpClient = builder.build();
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(baseUrl)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
