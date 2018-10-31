@@ -1,5 +1,4 @@
 if (isComponentLib) {
-    apply plugin: 'com.novoda.bintray-release'
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
@@ -30,12 +29,15 @@ dependencies {
     implementation rootProject.ext.dependencies.customviews
 }
 
-publish {
-    userOrg = 'ayvytr'
-    groupId = 'com.ayvytr'
-    artifactId = 'base-adapter'
-    publishVersion = '1.0.0'
-    desc = 'An easy adapter for recyclerview'
-    website = 'https://github.com/Ayvytr/ModularizationComponent'
-    licences = ['Apache-2.0']
+//publish {
+//    userOrg = 'ayvytr'
+//    groupId = 'com.ayvytr'
+//    artifactId = 'base-adapter'
+//    publishVersion = '1.0.0'
+//    desc = 'An easy adapter for recyclerview'
+//    website = 'https://github.com/Ayvytr/ModularizationComponent'
+//    licences = ['Apache-2.0']
+//}
+if(isComponentLib) {
+    apply from: '../upload.gradle'
 }

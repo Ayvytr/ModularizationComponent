@@ -1,5 +1,4 @@
 if (isComponentLib) {
-    apply plugin: 'com.novoda.bintray-release'
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
@@ -42,12 +41,15 @@ dependencies {
     api rootProject.ext.dependencies.logger
 }
 
-publish {
-    userOrg = 'ayvytr'
-    groupId = 'com.ayvytr'
-    artifactId = 'network'
-    publishVersion = '1.0.0'
-    desc = 'Network of OkHttp and Interceptors'
-    website = 'https://github.com/Ayvytr/ModularizationComponent'
-    licences = ['Apache-2.0']
+//publish {
+//    userOrg = 'ayvytr'
+//    groupId = 'com.ayvytr'
+//    artifactId = 'network'
+//    publishVersion = '1.0.0'
+//    desc = 'Network for OkHttp, Retrofit and Interceptors'
+//    website = 'https://github.com/Ayvytr/ModularizationComponent'
+//    licences = ['Apache-2.0']
+//}
+if(isComponentLib) {
+    apply from: '../upload.gradle'
 }
