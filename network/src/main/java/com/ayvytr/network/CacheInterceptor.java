@@ -27,7 +27,7 @@ public class CacheInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        if(NetworkUtils.isAvailable(context)) {
+        if(NetworkUtils.isConnected(context)) {
             return chain.proceed(chain.request());
         } else { // 如果没有网络，则返回缓存数据
             Request newRequest = chain.request().newBuilder()
