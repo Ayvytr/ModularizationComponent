@@ -30,15 +30,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation rootProject.ext.support.appcompat_v7
-    api rootProject.ext.dependencies.okhttp3
-    api rootProject.ext.dependencies.retrofit
-    api rootProject.ext.dependencies.retrofit_adapter_rxjava2
-    api rootProject.ext.dependencies.retrofit_converter_gson
-    api rootProject.ext.dependencies.retrofit_converter_scalars
-    api rootProject.ext.dependencies.okhttploginterceptor
-    api rootProject.ext.dependencies.rxjava2
-    api rootProject.ext.dependencies.rxjava2_android
-    api rootProject.ext.dependencies.logger
+    implementation rootProject.ext.dependencies.okhttp3
+    implementation rootProject.ext.dependencies.retrofit
+    implementation rootProject.ext.dependencies.retrofit_adapter_rxjava2
+    implementation rootProject.ext.dependencies.retrofit_converter_gson
+    implementation rootProject.ext.dependencies.retrofit_converter_scalars
+    implementation rootProject.ext.dependencies.okhttploginterceptor
+    implementation rootProject.ext.dependencies.logger
 }
 
 if(isComponentLib) {
