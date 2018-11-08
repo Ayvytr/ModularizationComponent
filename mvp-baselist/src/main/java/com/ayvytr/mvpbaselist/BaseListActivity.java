@@ -3,10 +3,14 @@ package com.ayvytr.mvpbaselist;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 
 import com.ayvytr.baseadapter.wrapper.EmptyWrapperAdapter;
 import com.ayvytr.mvpbase.IPresenter;
 import com.ayvytr.mvprxlifecycle.BaseMvpActivity;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
