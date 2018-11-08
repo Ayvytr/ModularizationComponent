@@ -1,7 +1,6 @@
 package com.ayvytr.network;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 
 import com.ayvytr.logger.L;
 import com.ayvytr.okhttploginterceptor.LoggingInterceptor;
@@ -35,7 +34,7 @@ public class ApiClient {
         init(context, baseUrl, null);
     }
 
-    public void init(final Context context, String baseUrl, @Nullable Interceptor interceptor) {
+    public void init(final Context context, String baseUrl, Interceptor interceptor) {
         gson = new Gson();
         loggingInterceptor = new LoggingInterceptor();
         loggingInterceptor.setLevel(LoggingLevel.SINGLE);

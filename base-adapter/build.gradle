@@ -1,14 +1,10 @@
-if (isComponentLib) {
-    apply plugin: 'com.android.library'
-} else {
-    apply plugin: 'com.android.application'
-}
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 7
+        minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
@@ -29,6 +25,6 @@ dependencies {
     implementation rootProject.ext.dependencies.customviews
 }
 
-if(isComponentLib) {
-    apply from: '../upload.gradle'
+if (enableMavenPush) {
+    apply from: 'https://raw.github.com/Ayvytr/KotlinJavadocMavenPush/master/maven_push.gradle'
 }

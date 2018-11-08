@@ -4,49 +4,29 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
+import android.widget.Toast;
 
-import com.ayvytr.customview.loading.StatusView;
-import com.ayvytr.easykotlin.context.ToastKt;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
-import butterknife.ButterKnife;
+import com.ayvytr.mvpbase.IInit;
+import com.ayvytr.mvpbase.IPresenter;
+import com.ayvytr.mvpbase.IView;
 
 /**
  * @author ayvytr
  */
-public abstract class BaseMvpActivity<P extends IPresenter> extends RxAppCompatActivity implements IView, IInit {
+public abstract class BaseMvpActivity<P extends IPresenter> extends AppCompatActivity implements IView, IInit {
     protected P mPresenter;
-
-    /**
-     * 一定要判空
-     */
-    @Nullable
-    protected StatusView mStatusView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int contentViewRes = getContentViewRes();
         if(contentViewRes > 0) {
-            if(useStatusView()) {
-                mStatusView = new StatusView(getContext());
-                mStatusView.setContentView(LayoutInflater.from(getContext()).inflate(contentViewRes, null));
-                setContentView(mStatusView);
-            } else {
-                setContentView(contentViewRes);
-            }
+            setContentView(contentViewRes);
         }
-        ButterKnife.bind(this);
         mPresenter = getPresenter();
         initExtra();
         initView(savedInstanceState);
         initData(savedInstanceState);
-    }
-
-    @Override
-    public boolean useStatusView() {
-        return false;
     }
 
     protected abstract P getPresenter();
@@ -71,12 +51,12 @@ public abstract class BaseMvpActivity<P extends IPresenter> extends RxAppCompatA
 
     @Override
     public void showMessage(String message) {
-        ToastKt.toast(getContext(), message);
+        Toast.makeText(BaseMvpActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showMessage(int stringId) {
-        ToastKt.toast(getContext(), stringId);
+        Toast.makeText(BaseMvpActivity.this, stringId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -91,12 +71,12 @@ public abstract class BaseMvpActivity<P extends IPresenter> extends RxAppCompatA
 
     @Override
     public void showError(String errorMsg) {
-        ToastKt.toast(getContext(), errorMsg);
+        Toast.makeText(BaseMvpActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showError(int stringId) {
-        ToastKt.toast(getContext(), stringId);
+        Toast.makeText(BaseMvpActivity.this, stringId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
