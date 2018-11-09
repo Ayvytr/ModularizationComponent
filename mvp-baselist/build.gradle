@@ -26,8 +26,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':base-adapter')
     api project(':mvp-rxlifecycle')
-    api rootProject.ext.support.recyclerview
-    api rootProject.ext.dependencies.smartrefresh
+    implementation rootProject.ext.support.recyclerview
+    implementation rootProject.ext.dependencies.smartrefresh
 
     implementation rootProject.ext.support.appcompat_v7
     testImplementation 'junit:junit:4.12'
