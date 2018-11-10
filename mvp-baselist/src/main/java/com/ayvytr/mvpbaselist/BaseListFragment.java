@@ -50,6 +50,11 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
         resetPage();
     }
 
+    /**
+     * 更新列表，下拉刷新，加载更多都用这个
+     *
+     * @param list 数据集合，可以为空
+     */
     public void updateList(List<T> list) {
 
         if(mAdapter == null) {

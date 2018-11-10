@@ -2,7 +2,6 @@ package com.ayvytr.network;
 
 import android.content.Context;
 
-import com.ayvytr.logger.L;
 import com.ayvytr.okhttploginterceptor.LoggingInterceptor;
 import com.ayvytr.okhttploginterceptor.LoggingLevel;
 import com.google.gson.Gson;
@@ -30,16 +29,25 @@ public class ApiClient {
         return SingletonHolder.NETWORK;
     }
 
+    /**
+     * 初始化，默认缓存64M
+     *
+     * @param context Context
+     * @param baseUrl baseUrl
+     */
     public void init(final Context context, String baseUrl) {
         init(context, baseUrl, null);
     }
 
     public void init(final Context context, String baseUrl, Interceptor interceptor) {
+        init(context, baseUrl, interceptor, 1024 * 1024 * 1024 * 64L);
+    }
+
+    public void init(final Context context, String baseUrl, Interceptor interceptor, long cacheSize) {
         gson = new Gson();
         loggingInterceptor = new LoggingInterceptor();
         loggingInterceptor.setLevel(LoggingLevel.SINGLE);
-        L.e(context.getCacheDir(), context.getExternalCacheDir());
-        Cache cache = new Cache(new File(context.getExternalCacheDir(), "okhttp"), 1024 * 1024 * 1024 * 64L);
+        Cache cache = new Cache(new File(context.getExternalCacheDir(), "okhttp"), cacheSize);
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .cache(cache)
                 .addInterceptor(loggingInterceptor)

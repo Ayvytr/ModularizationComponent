@@ -35,7 +35,6 @@ dependencies {
     implementation rootProject.ext.dependencies.retrofit_converter_gson
     implementation rootProject.ext.dependencies.retrofit_converter_scalars
     implementation rootProject.ext.dependencies.okhttploginterceptor
-    implementation rootProject.ext.dependencies.logger
 }
 
 if(enableMavenPush) {

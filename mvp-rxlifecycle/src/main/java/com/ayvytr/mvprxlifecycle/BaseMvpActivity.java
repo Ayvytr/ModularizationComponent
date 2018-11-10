@@ -11,8 +11,6 @@ import com.ayvytr.mvpbase.IPresenter;
 import com.ayvytr.mvpbase.IView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
-import butterknife.ButterKnife;
-
 /**
  * @author ayvytr
  */
@@ -26,7 +24,6 @@ public abstract class BaseMvpActivity<P extends IPresenter> extends RxAppCompatA
         if(contentViewRes > 0) {
             setContentView(contentViewRes);
         }
-        ButterKnife.bind(this);
         mPresenter = getPresenter();
         initExtra();
         initView(savedInstanceState);

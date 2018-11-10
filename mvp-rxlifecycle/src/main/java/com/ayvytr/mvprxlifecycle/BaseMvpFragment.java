@@ -13,9 +13,6 @@ import com.ayvytr.mvpbase.IPresenter;
 import com.ayvytr.mvpbase.IView;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * @author ayvytr
  */
@@ -25,8 +22,6 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
     protected boolean isViewCreated;
 
     protected P mPresenter;
-
-    protected Unbinder mUnbinder;
 
     @Nullable
     @Override
@@ -45,7 +40,6 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
         super.onViewCreated(view, savedInstanceState);
         isViewCreated = true;
         mPresenter = getPresenter();
-        mUnbinder = ButterKnife.bind(this, view);
         initExtra();
         initView(savedInstanceState);
         initData(savedInstanceState);
@@ -57,9 +51,6 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
     public void onDestroyView() {
         super.onDestroyView();
         isViewCreated = false;
-        if(mUnbinder != null) {
-            mUnbinder.unbind();
-        }
     }
 
     @Override
