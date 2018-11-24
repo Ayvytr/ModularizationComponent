@@ -50,11 +50,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(':mvp-base')
-    api rootProject.ext.dependencies.rxlifecycle2_components
+    api(rootProject.ext.dependencies.rxlifecycle2_components) {
+        exclude group: 'android.arch.lifecycle', module: 'runtime'
+    }
 
     implementation rootProject.ext.support.appcompat_v7
 }
 
-if(enableMavenPush) {
+if (enableMavenPush) {
     apply from: 'https://raw.github.com/Ayvytr/KotlinJavadocMavenPush/master/maven_push.gradle'
 }
