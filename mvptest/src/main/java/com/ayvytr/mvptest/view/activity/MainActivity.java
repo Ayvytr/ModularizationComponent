@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ayvytr.mvp.BaseMvpActivity;
+import com.ayvytr.mvprxlifecycle.BaseMvpActivity;
 import com.ayvytr.mvptest.R;
 import com.ayvytr.mvptest.contract.MainContract;
 import com.ayvytr.mvptest.model.MainModel;

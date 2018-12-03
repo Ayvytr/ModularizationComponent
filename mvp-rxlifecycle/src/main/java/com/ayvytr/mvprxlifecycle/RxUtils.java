@@ -25,7 +25,6 @@ import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
-import com.trello.rxlifecycle2.internal.Preconditions;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -60,7 +59,6 @@ public class RxUtils {
      */
     public static <T> LifecycleTransformer<T> bindUntilEvent(@NonNull final IView view,
                                                              final ActivityEvent event) {
-        Preconditions.checkNotNull(view, "view == null");
         if(view instanceof RxAppCompatActivity) {
             return RxLifecycle.bindUntilEvent(((RxAppCompatActivity) view).lifecycle(), event);
         }
@@ -71,7 +69,6 @@ public class RxUtils {
      * 绑定 Fragment 的指定生命周期
      */
     public static <T> LifecycleTransformer<T> bindUntilEvent(@NonNull IView view, @NonNull FragmentEvent event) {
-        Preconditions.checkNotNull(view, "view == null");
         if(view instanceof RxFragment) {
             return RxLifecycle.bindUntilEvent(((RxFragment) view).lifecycle(), event);
         }
@@ -82,7 +79,6 @@ public class RxUtils {
      * 绑定 Activity/Fragment 的生命周期
      */
     public static <T> LifecycleTransformer<T> bindToLifecycle(@NonNull IView view) {
-        Preconditions.checkNotNull(view, "lifecycleable == null");
         if(view instanceof RxAppCompatActivity) {
             return RxLifecycleAndroid.bindActivity(((RxAppCompatActivity) view).lifecycle());
         } else if(view instanceof RxFragment) {
@@ -93,6 +89,16 @@ public class RxUtils {
     }
 
     /**
+     * 默认的线程切换和loading显示
+     *
+     * @return ObservableTransformer
+     */
+    @NonNull
+    public static <T> ObservableTransformer<T, T> ofDefault() {
+        return ofDefault(null);
+    }
+
+    /**
      * 封装线程切换和loading显示
      *
      * @param view IView
@@ -100,7 +106,7 @@ public class RxUtils {
      * @return ObservableTransformer
      */
     @NonNull
-    public static <T> ObservableTransformer<T, T> subscribeIo(@Nullable final IView view) {
+    public static <T> ObservableTransformer<T, T> ofDefault(@Nullable final IView view) {
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {
