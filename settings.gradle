@@ -1,1 +1,1 @@
-include ':mvp-rxlifecycle', ':network', ':base-adapter', ':mvp-base', ':mvp-baselist', ':mvptest', ':mvp-rxlifecycle-kotlin'
+include ':mvp-rxlifecycle', ':network', ':base-adapter', ':mvp-base', ':mvp-baselist', ':sample-mvp-rxlifecycle-kotlin', ':mvp-rxlifecycle-kotlin'
