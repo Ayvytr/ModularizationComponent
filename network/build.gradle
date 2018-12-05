@@ -1,8 +1,4 @@
-if (isComponentLib) {
-    apply plugin: 'com.android.library'
-} else {
-    apply plugin: 'com.android.application'
-}
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -37,6 +33,6 @@ dependencies {
     implementation rootProject.ext.dependencies.okhttploginterceptor
 }
 
-if(enableMavenPush) {
+if (enableMavenPush) {
     apply from: 'https://raw.github.com/Ayvytr/KotlinJavadocMavenPush/master/maven_push.gradle'
 }

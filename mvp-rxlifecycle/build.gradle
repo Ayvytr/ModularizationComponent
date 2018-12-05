@@ -1,8 +1,4 @@
-if (isComponentLib) {
-    apply plugin: 'com.android.library'
-} else {
-    apply plugin: 'com.android.application'
-}
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -23,36 +19,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    sourceSets {
-        main {
-            if (!isComponentLib) {
-                manifest.srcFile 'src/demo/AndroidManifest.xml'
-                // 合并 debug和main中的res
-                res.srcDirs = ['src/demo/res', 'src/main/res']
-                java.srcDirs = ['src/demo/java', 'src/main/java']
-            } else {
-                manifest.srcFile 'src/main/AndroidManifest.xml'
-                res.srcDirs = ['src/main/res']
-                java {
-                    //排除java/demo文件夹下的所有文件
-                    exclude 'src/demo/**'
-                }
-
-                resources {
-                    exclude 'src/demo/*'
-                }
-            }
-        }
-    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(':mvp-base')
-    api(rootProject.ext.dependencies.rxlifecycle2_components) {
-        exclude group: 'android.arch.lifecycle', module: 'runtime'
-    }
+    api rootProject.ext.dependencies.rxlifecycle2_components
 
     implementation rootProject.ext.support.appcompat_v7
 }

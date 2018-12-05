@@ -1,6 +1,4 @@
 ext {
-    isComponentLib = true
-//    isComponentLib = false
 
     compileSdkVersion = 27
     buildToolsVersion = "27.0.3"
