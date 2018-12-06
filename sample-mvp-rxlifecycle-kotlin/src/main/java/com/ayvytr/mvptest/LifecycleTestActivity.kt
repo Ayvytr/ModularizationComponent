@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import com.ayvytr.mvprxlifecycle.RxUtils
+import com.ayvytr.rxlifecycle.RxUtils
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindToLifecycle
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit

@@ -7,11 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ayvytr.mvprxlifecycle.BaseMvpActivity;
 import com.ayvytr.mvptest.R;
 import com.ayvytr.mvptest.contract.MainContract;
 import com.ayvytr.mvptest.model.MainModel;
 import com.ayvytr.mvptest.presenter.MainPresenter;
+import com.ayvytr.rxlifecycle.BaseMvpActivity;
 
 public class MainActivity extends BaseMvpActivity<MainPresenter> implements MainContract.View {
 

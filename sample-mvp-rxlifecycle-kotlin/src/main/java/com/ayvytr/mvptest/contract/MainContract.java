@@ -1,7 +1,7 @@
 package com.ayvytr.mvptest.contract;
 
-import com.ayvytr.mvpbase.IModel;
-import com.ayvytr.mvpbase.IView;
+import com.ayvytr.mvp.IModel;
+import com.ayvytr.mvp.IView;
 
 public class MainContract {
     public interface Model extends IModel {}

@@ -2,7 +2,7 @@ package com.ayvytr.mvprxlifecycle.kotlin
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleOwner
-import com.ayvytr.mvpbase.IView
+import com.ayvytr.mvp.IView
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindToLifecycle
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import io.reactivex.*
@@ -11,7 +11,9 @@ import io.reactivex.*
  * @author ayvytr
  */
 
-
+/**
+ * @param view [IView]
+ */
 fun <T> Observable<T>.bindToLifecycle(view: IView): Observable<T>
         = bindToLifecycle(view as LifecycleOwner)
 

@@ -1,9 +1,9 @@
 package com.ayvytr.mvptest.presenter
 
-import com.ayvytr.mvpbase.BasePresenter
-import com.ayvytr.mvprxlifecycle.RxUtils
+import com.ayvytr.mvp.BasePresenter
 import com.ayvytr.mvprxlifecycle.kotlin.bindToLifecycle
 import com.ayvytr.mvptest.contract.MainContract
+import com.ayvytr.rxlifecycle.RxUtils
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
 

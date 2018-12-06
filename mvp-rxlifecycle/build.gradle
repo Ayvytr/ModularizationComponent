@@ -23,10 +23,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api project(':mvp-base')
     api rootProject.ext.dependencies.rxlifecycle2_components
+    api project(':mvp-base')
 
-    implementation rootProject.ext.support.appcompat_v7
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
 if (enableMavenPush) {
