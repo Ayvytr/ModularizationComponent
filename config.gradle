@@ -99,7 +99,6 @@ ext {
             bugly                     : 'com.tencent.bugly:crashreport:2.6.6',
     ]
 
-    ext.anko_version = '0.10.6'
     kotlin = [
             kotlin_jdk7        : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
             anko               : "org.jetbrains.anko:anko:$anko_version",
