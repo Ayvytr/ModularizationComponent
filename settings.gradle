@@ -1,4 +1,4 @@
-include ':base-adapter'
+include ':base-adapter', ':sample-mvp-rxlifecycle'
 include ':mvp-rxlifecycle', ':mvp-base', ':mvp-baselist'
 
 include ':network'

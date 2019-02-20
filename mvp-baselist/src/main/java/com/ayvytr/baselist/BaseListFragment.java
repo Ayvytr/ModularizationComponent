@@ -69,10 +69,10 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
             mAdapter.updateList(list);
         } else {
             mAdapter.addList(list);
-        }
-
-        if(!list.isEmpty()) {
-            currentPage++;
+            //用户自行处理，这里自动处理有问题
+//            if(!list.isEmpty()) {
+//                currentPage++;
+//            }
         }
 
         if(mAdapter.isEmpty()) {

@@ -72,10 +72,14 @@ public abstract class BaseListActivity<P extends IPresenter, T> extends BaseMvpA
             mAdapter.updateList(list);
         } else {
             mAdapter.addList(list);
+            //用户自行处理，这里自动处理有问题
+//            if(!list.isEmpty()) {
+//                currentPage++;
+//            }
         }
 
-        if(!list.isEmpty()) {
-            currentPage++;
+        if(mAdapter.isEmpty()) {
+            showEmpty();
         }
 
         finishRefreshLoadMore();

@@ -69,7 +69,7 @@ ext {
 
             agentweb                  : "com.just.agentweb:agentweb:4.0.2",
 
-            smartrefresh              : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14",
+            smartrefresh              : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20",
 
             leakcanary                : "com.squareup.leakcanary:leakcanary-android:1.6.2",
             leakcanary_release        : "com.squareup.leakcanary:leakcanary-android-no-op:1.6.2",
