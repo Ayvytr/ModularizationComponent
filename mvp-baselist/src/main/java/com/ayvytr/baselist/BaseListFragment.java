@@ -54,6 +54,18 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
         resetPage();
     }
 
+    public void finishRefreshLoadMore() {
+        mSmartRefreshLayout.finishRefresh();
+        mSmartRefreshLayout.finishLoadMore();
+    }
+
+    /**
+     * 刷新列表/重新从第1页开始时调用
+     */
+    public void resetPage() {
+        mCurrentPage = 1;
+    }
+
     /**
      * 更新列表，下拉刷新，加载更多都用这个，callback最好不为空，避免刷新闪烁
      *
@@ -99,11 +111,6 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
         mSmartRefreshLayout.finishLoadMore(0, true, list.size() != mPageSize);
     }
 
-    public void finishRefreshLoadMore() {
-        mSmartRefreshLayout.finishRefresh();
-        mSmartRefreshLayout.finishLoadMore();
-    }
-
     @Override
     public void showError(int stringId) {
         finishRefreshLoadMore();
@@ -130,10 +137,4 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
         mStatusView.showEmpty();
     }
 
-    /**
-     * 刷新列表/重新从第1页开始时调用
-     */
-    public void resetPage() {
-        mCurrentPage = 1;
-    }
 }
