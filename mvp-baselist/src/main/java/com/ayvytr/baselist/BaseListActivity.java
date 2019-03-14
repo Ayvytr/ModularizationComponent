@@ -41,6 +41,7 @@ public abstract class BaseListActivity<P extends IPresenter, T> extends BaseMvpA
         mSmartRefreshLayout = findViewById(R.id.smart_refresh_layout);
         if(mSmartRefreshLayout != null) {
             mSmartRefreshLayout.setOnRefreshLoadMoreListener(this);
+            mSmartRefreshLayout.setEnableAutoLoadMore(false);
         }
         mStatusView = findViewById(R.id.statusView);
     }

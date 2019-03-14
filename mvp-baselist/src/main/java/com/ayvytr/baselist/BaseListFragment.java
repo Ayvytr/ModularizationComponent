@@ -41,6 +41,7 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
         mSmartRefreshLayout = mContentView.findViewById(R.id.smart_refresh_layout);
         if(mSmartRefreshLayout != null) {
             mSmartRefreshLayout.setOnRefreshLoadMoreListener(this);
+            mSmartRefreshLayout.setEnableAutoLoadMore(false);
         }
         mStatusView = mContentView.findViewById(R.id.statusView);
     }
