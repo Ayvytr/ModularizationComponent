@@ -5,7 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
-import com.ayvytr.baseadapter.wrapper.EmptyWrapperAdapter;
+import com.ayvytr.baseadapter.MultiItemTypeAdapter;
+import com.ayvytr.customview.loading.StatusView;
 import com.ayvytr.mvp.IPresenter;
 import com.ayvytr.rxlifecycle.BaseMvpActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -23,9 +24,10 @@ public abstract class BaseListActivity<P extends IPresenter, T> extends BaseMvpA
     protected int currentPage = 1;
     protected int pageSize = 10;
 
+    protected StatusView mStatusView;
     protected RecyclerView mRvList;
     protected SmartRefreshLayout mSmartRefreshLayout;
-    protected EmptyWrapperAdapter<T> mAdapter;
+    protected MultiItemTypeAdapter<T> mAdapter;
 
 
     @Override
@@ -39,6 +41,7 @@ public abstract class BaseListActivity<P extends IPresenter, T> extends BaseMvpA
         if(mSmartRefreshLayout != null) {
             mSmartRefreshLayout.setOnRefreshLoadMoreListener(this);
         }
+        mStatusView = findViewById(R.id.statusView);
     }
 
     @Override
@@ -78,9 +81,9 @@ public abstract class BaseListActivity<P extends IPresenter, T> extends BaseMvpA
 //            }
         }
 
-        if(mAdapter.isEmpty()) {
-            showEmpty();
-        }
+//        if(mAdapter.isEmpty()) {
+//            showEmpty();
+//        }
 
         finishRefreshLoadMore();
         mSmartRefreshLayout.finishLoadMore(0, true, list.size() != pageSize);
@@ -88,27 +91,27 @@ public abstract class BaseListActivity<P extends IPresenter, T> extends BaseMvpA
 
     @Override
     public void showLoading() {
-        mAdapter.showLoading();
+//        mAdapter.showLoading();
     }
 
     @Override
     public void showError(int stringId) {
         finishRefreshLoadMore();
-        if(mAdapter.isEmpty()) {
-            mAdapter.showError(getContext().getString(stringId));
-        } else {
-            super.showError(stringId);
-        }
+//        if(mAdapter.isEmpty()) {
+//            mAdapter.showError(getContext().getString(stringId));
+//        } else {
+//            super.showError(stringId);
+//        }
     }
 
     @Override
     public void showError(String errorMsg) {
         finishRefreshLoadMore();
-        if(mAdapter.isEmpty()) {
-            mAdapter.showError(errorMsg);
-        } else {
-            super.showError(errorMsg);
-        }
+//        if(mAdapter.isEmpty()) {
+//            mAdapter.showError(errorMsg);
+//        } else {
+//            super.showError(errorMsg);
+//        }
     }
 
     public void finishRefreshLoadMore() {

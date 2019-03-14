@@ -149,29 +149,29 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
 
     public void updateList(List<T> list) {
         //TODO 解决闪烁问题
-        notifyDataSetChanged();
         mInnerAdapter.updateList(list == null ? new ArrayList<T>(0) : list);
+        notifyDataSetChanged();
     }
 
     public void addList(List<T> list) {
-//        notifyDataSetChanged();
         mInnerAdapter.addList(list);
+        notifyDataSetChanged();
 //        notifyItemRangeChanged(0, getItemCount());
     }
 
     public void addList(int index, List<T> list) {
-//        notifyDataSetChanged();
         mInnerAdapter.addList(index, list);
+        notifyDataSetChanged();
 //        notifyItemRangeChanged(0, getItemCount());
     }
 
     public void remove(T t) {
-//        notifyDataSetChanged();
         mInnerAdapter.remove(t);
+        notifyDataSetChanged();
 
-        if(isEmpty()) {
-            notifyDataSetChanged();
-        }
+//        if(isEmpty()) {
+//            notifyDataSetChanged();
+//        }
 //        } else {
 //            notifyItemRangeChanged(0, getItemCount());
 //        }
@@ -180,6 +180,7 @@ public abstract class EmptyWrapperAdapter<T> extends RecyclerView.Adapter<Recycl
     public void remove(int index) {
 //        notifyDataSetChanged();
         mInnerAdapter.remove(index);
+        notifyDataSetChanged();
 
 //        if(isEmpty()) {
 //            notifyDataSetChanged();

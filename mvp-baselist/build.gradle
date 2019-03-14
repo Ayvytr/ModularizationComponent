@@ -28,6 +28,7 @@ dependencies {
     implementation rootProject.ext.dependencies.smartrefresh
     api project(':base-adapter')
     api project(':mvp-rxlifecycle')
+    api rootProject.ext.dependencies.customviews
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

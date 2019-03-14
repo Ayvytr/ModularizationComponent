@@ -10,9 +10,6 @@ import java.util.List;
  */
 public abstract class CommonAdapter<T> extends MultiItemTypeAdapter<T>
 {
-    protected Context mContext;
-    protected List<T> mDatas;
-
     //如果需要，再重新加上
 //    protected int mLayoutId;
 

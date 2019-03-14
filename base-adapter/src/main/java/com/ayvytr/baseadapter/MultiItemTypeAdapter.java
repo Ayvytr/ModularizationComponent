@@ -20,6 +20,9 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     protected OnItemClickListener mOnItemClickListener;
     protected OnItemLongClickListener mOnItemLongClickListener;
 
+    public MultiItemTypeAdapter(Context context) {
+        this(context, new ArrayList<T>(0));
+    }
 
     public MultiItemTypeAdapter(Context context, List<T> datas) {
         mContext = context;
@@ -101,46 +104,40 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public void updateList(List<T> list) {
-        mDatas = list == null ? new ArrayList<T>(0) : list;
-        if(mDatas.isEmpty()) {
-            notifyDataSetChanged();
-        } else {
-            notifyItemRangeInserted(0, mDatas.size());
+        if(list != null && !list.isEmpty()) {
+            if(!mDatas.isEmpty()) {
+                mDatas.clear();
+            }
+            mDatas.addAll(list);
         }
     }
 
     public void addList(List<T> list) {
-        if(list != null) {
-            int startIndex = mDatas.size();
+        if(list != null && !list.isEmpty()) {
             mDatas.addAll(list);
-            notifyItemRangeInserted(startIndex, mDatas.size());
         }
     }
 
     public void addList(int index, List<T> list) {
-        if(list != null) {
+        if(list != null && !list.isEmpty()) {
             mDatas.addAll(index, list);
-            notifyItemRangeInserted(index, list.size());
         }
     }
 
     public void remove(T t) {
-        int position = mDatas.indexOf(t);
-        boolean succeed = mDatas.remove(t);
-        if(succeed) {
-            notifyItemRemoved(position);
+        if(t != null) {
+            mDatas.remove(t);
         }
     }
 
     public void remove(int index) {
-        mDatas.remove(index);
-        notifyItemRemoved(index);
+        if(index > 0 && index < mDatas.size()) {
+            mDatas.remove(index);
+        }
     }
 
     public void clear() {
-        int size = mDatas.size();
         mDatas.clear();
-        notifyItemRangeRemoved(0, size);
     }
 
     public T getItemAt(int position) {
