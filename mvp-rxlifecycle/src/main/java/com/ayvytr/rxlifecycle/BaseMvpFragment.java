@@ -47,19 +47,21 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
 
     protected abstract P getPresenter();
 
+    //ViewPager+Fragment使用时，切换Fragment时，Fragment调用了onDestroyView, onStop, 但是并未调用onDestroy，会有内存泄漏.
+    // 所以把Presenter.onDestroy迁移到这里，后续有问题再进行处理
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         isViewCreated = false;
+        if(mPresenter != null) {
+            mPresenter.onDestroy();
+            mPresenter = null;
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mPresenter != null) {
-            mPresenter.onDestroy();
-            mPresenter = null;
-        }
     }
 
     @Override
