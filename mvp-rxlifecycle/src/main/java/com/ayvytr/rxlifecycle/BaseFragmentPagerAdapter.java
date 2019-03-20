@@ -11,7 +11,9 @@ import java.util.List;
 
 /**
  * @author Do
+ * @deprecated 暂未用到
  */
+@Deprecated
 public class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> mList;
     @Nullable
