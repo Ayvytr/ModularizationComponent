@@ -52,6 +52,7 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mContentView = null;
         isViewCreated = false;
         if(mPresenter != null) {
             mPresenter.onDestroy();

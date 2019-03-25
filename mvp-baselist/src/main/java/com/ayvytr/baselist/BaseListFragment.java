@@ -138,4 +138,20 @@ public abstract class BaseListFragment<P extends IPresenter, T> extends BaseMvpF
         mStatusView.showEmpty();
     }
 
+    @Override
+    public void onDestroyView() {
+        mStatusView = null;
+        mSmartRefreshLayout = null;
+        mAdapter.clear();
+        mRvList.setLayoutManager(null);
+        mRvList.setAdapter(null);
+        mRvList = null;
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter = null;
+    }
 }
