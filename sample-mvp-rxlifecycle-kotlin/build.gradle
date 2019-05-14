@@ -26,14 +26,14 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation rootProject.ext.support.appcompat_v7
-    implementation rootProject.ext.support.constraint
+    implementation deps.support.appcompat_v7
+    implementation deps.support.constraint
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation rootProject.ext.kotlin.kotlin_jdk7
-    implementation rootProject.ext.kotlin.anko
-    implementation rootProject.ext.kotlin.anko_commons
+    implementation deps.kotlin.kotlin_jdk7
+    implementation deps.kotlin.anko
+    implementation deps.kotlin.anko_commons
 
     implementation(project(':mvp-rxlifecycle-kotlin')) {
         exclude group: 'android.arch.lifecycle', module: 'runtime'
@@ -41,6 +41,6 @@ dependencies {
 
     implementation project(':network')
 
-    implementation rootProject.ext.dependencies.rxjava2
-    implementation rootProject.ext.dependencies.rxjava2_android
+    implementation deps.rxjava2
+    implementation deps.rxjava2_android
 }

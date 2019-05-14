@@ -21,7 +21,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation rootProject.ext.support.recyclerview
+    implementation deps.support.recyclerview
     implementation deps.customviews
 }
 
