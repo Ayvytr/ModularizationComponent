@@ -45,7 +45,10 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
         initData(savedInstanceState);
     }
 
-    protected abstract P getPresenter();
+    @Nullable
+    protected P getPresenter() {
+       return null;
+    }
 
     //ViewPager+Fragment使用时，切换Fragment时，Fragment调用了onDestroyView, onStop, 但是并未调用onDestroy，会有内存泄漏.
     // 所以把Presenter.onDestroy迁移到这里，后续有问题再进行处理
@@ -96,5 +99,25 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends RxFragment
     @Override
     public void showEmpty() {
 
+    }
+
+    @Override
+    public void initExtra() {
+
+    }
+
+    @Override
+    public void initView(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public int getContentViewRes() {
+        return 0;
     }
 }
