@@ -7,7 +7,6 @@ ext.deps = [:]
 //module 作为组件/application存在
 ext.isLib = true
 //    isLib = false
-ext.enableMavenPush = false
 
 ext.minSdkVersion = 16
 ext.targetSdkVersion = 26
