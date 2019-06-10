@@ -25,12 +25,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation rootProject.ext.dependencies.okhttp3
-    implementation rootProject.ext.dependencies.retrofit
-    implementation rootProject.ext.dependencies.retrofit_adapter_rxjava2
-    implementation rootProject.ext.dependencies.retrofit_converter_gson
-    implementation rootProject.ext.dependencies.retrofit_converter_scalars
-    implementation rootProject.ext.dependencies.okhttploginterceptor
+    implementation deps.okhttp3
+    implementation deps.retrofit
+    implementation deps.retrofit_adapter_rxjava2
+    implementation deps.retrofit_converter_gson
+    implementation deps.retrofit_converter_scalars
+    implementation deps.okhttploginterceptor
 }
 
 if (enableMavenPush) {

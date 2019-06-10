@@ -21,8 +21,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation rootProject.ext.support.recyclerview
-    implementation rootProject.ext.dependencies.customviews
+    implementation deps.support.recyclerview
+    implementation deps.customviews
 }
 
 if (enableMavenPush) {

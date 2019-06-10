@@ -23,7 +23,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api rootProject.ext.dependencies.rxlifecycle2_components
+    api deps.rxlifecycle2_components
     api project(':mvp-base')
 
 
