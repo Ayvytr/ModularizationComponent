@@ -1,5 +1,6 @@
 package com.ayvytr.network.kotlin
 
+import android.content.Context
 import com.ayvytr.okhttploginterceptor.LoggingInterceptor
 import com.ayvytr.okhttploginterceptor.LoggingLevel
 import okhttp3.Cache
@@ -23,14 +24,15 @@ class ApiClient private constructor() {
 
     @JvmOverloads
     fun init(baseUrl: String,
+             context: Context,
              hasCache: Boolean = false,
              cachePath: String = "",
              cacheSize: Long = 1024 * 1024 * 64,
+             cacheMaxStaleSeconds: Int = 3600,
              interceptorList: List<Interceptor> = listOf()) {
         val builder = OkHttpClient.Builder()
             .addInterceptor(LoggingInterceptor(LoggingLevel.SINGLE))
-            //                .addInterceptor(new CacheInterceptor(context))
-            //                .addNetworkInterceptor(new CacheNetworkInterceptor())
+            .addInterceptor(HttpCacheInterceptor(context, cacheMaxStaleSeconds))
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
