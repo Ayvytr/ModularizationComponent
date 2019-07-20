@@ -66,10 +66,6 @@ test.mockito = 'org.mockito:mockito-core:2.21.0'
 
 deps.test = test
 
-deps.junit = "junit:junit:4.12"
-deps.testRunner = "com.android.support.test:runner:1.0.2"
-deps.espresso = "com.android.support.test.espresso:espresso-core:3.0.2"
-
 //ayvytr
 deps.base_adapter = "com.ayvytr:base-adapter:$versions.ayvytr_mc"
 deps.mvp_baselist = "com.ayvytr:mvp-baselist:$versions.ayvytr_mc"

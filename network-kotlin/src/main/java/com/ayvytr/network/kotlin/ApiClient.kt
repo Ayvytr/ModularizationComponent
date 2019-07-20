@@ -16,20 +16,23 @@ import java.util.concurrent.TimeUnit
  */
 class ApiClient private constructor() {
     lateinit var okHttpClient: OkHttpClient
-
-    lateinit var defaultRetrofit: Retrofit
+        private set
+    private lateinit var defaultRetrofit: Retrofit
     lateinit var baseUrl: String
+        private set
 
     private val retrofitMap: HashMap<String, Retrofit> = hashMapOf()
 
     @JvmOverloads
-    fun init(baseUrl: String,
-             context: Context,
-             hasCache: Boolean = false,
-             cachePath: String = "",
-             cacheSize: Long = 1024 * 1024 * 64,
-             cacheMaxStaleSeconds: Int = 3600,
-             interceptorList: List<Interceptor> = listOf()) {
+    fun init(
+        baseUrl: String,
+        context: Context,
+        hasCache: Boolean = false,
+        cachePath: String = "",
+        cacheSize: Long = 1024 * 1024 * 64,
+        cacheMaxStaleSeconds: Int = 3600,
+        interceptorList: List<Interceptor> = listOf()
+    ) {
         val builder = OkHttpClient.Builder()
             .addInterceptor(LoggingInterceptor(LoggingLevel.SINGLE))
             .addInterceptor(HttpCacheInterceptor(context, cacheMaxStaleSeconds))
@@ -64,7 +67,7 @@ class ApiClient private constructor() {
 
         var retrofit = retrofitMap[baseUrl]
         if (retrofit == null) {
-            retrofit = defaultRetrofit.newBuilder()
+            retrofit = this.defaultRetrofit.newBuilder()
                 .baseUrl(baseUrl)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
