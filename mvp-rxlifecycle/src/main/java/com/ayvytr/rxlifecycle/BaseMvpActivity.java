@@ -30,7 +30,6 @@ public abstract class BaseMvpActivity<P extends IPresenter> extends RxAppCompatA
         initData(savedInstanceState);
     }
 
-    @Nullable
     protected P getPresenter() {
         return null;
     }
@@ -85,11 +84,6 @@ public abstract class BaseMvpActivity<P extends IPresenter> extends RxAppCompatA
 
     @Override
     public void showEmpty() {
-
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 

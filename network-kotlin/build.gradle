@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion 9
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation deps.kotlin.kotlin_jdk7
+
+    implementation deps.okhttp3
+    implementation deps.retrofit
+    implementation deps.retrofit_converter_gson
+    implementation deps.retrofit_converter_scalars
+    implementation deps.okhttploginterceptor
+
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.testRunner
+    androidTestImplementation deps.test.espresso
+}
