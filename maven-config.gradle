@@ -1,4 +1,4 @@
 ext{
-    enableMavenPush = true
-//    enableMavenPush = false
+//    enableMavenPush = true
+    enableMavenPush = false
 }

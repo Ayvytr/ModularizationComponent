@@ -34,7 +34,7 @@ fun Context.getConnectivityManager(): ConnectivityManager {
  *
  * @return `true`: 是<br></br>`false`: 否
  */
-fun Context.isConnected(): Boolean {
+fun Context.isNetworkConnected(): Boolean {
     val cm = getConnectivityManager()
     val activeNetworkInfo = cm.activeNetworkInfo
     return activeNetworkInfo != null && activeNetworkInfo.isConnected

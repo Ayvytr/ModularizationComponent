@@ -1,4 +1,4 @@
-package com.ayvytr.gank
+package com.ayvytr.app
 
 import org.junit.Test
 

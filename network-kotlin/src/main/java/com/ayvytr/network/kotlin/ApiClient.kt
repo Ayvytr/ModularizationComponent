@@ -8,6 +8,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -53,6 +54,7 @@ class ApiClient private constructor() {
         defaultRetrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -70,7 +72,6 @@ class ApiClient private constructor() {
             retrofit = this.defaultRetrofit.newBuilder()
                 .baseUrl(baseUrl)
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
                 .build()
             retrofitMap[baseUrl] = retrofit
         }
@@ -89,8 +90,11 @@ class ApiClient private constructor() {
     }
 
     companion object {
-        val instance: ApiClient
-            get() = SingletonHolder.NETWORK
+        fun getInstance():ApiClient {
+            return SingletonHolder.NETWORK
+        }
+//        val instance: ApiClient
+//            get() = SingletonHolder.NETWORK
     }
 }
 
