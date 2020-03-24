@@ -1,10 +1,10 @@
-package com.ayvytr.network.kotlin
+package com.ayvytr.network
 
 import android.content.Context
 import android.net.ConnectivityManager
 
 /**
- * @author admin
+ * @author ayvytr
  */
 
 /**
@@ -14,7 +14,7 @@ import android.net.ConnectivityManager
  *
  * @return `true`: 可用<br></br>`false`: 不可用
  */
-fun Context.isAvailable(): Boolean {
+fun isNetworkAvailable(): Boolean {
     val cm = getConnectivityManager()
     val activeNetworkInfo = cm.activeNetworkInfo
     return activeNetworkInfo != null && activeNetworkInfo.isAvailable
@@ -23,8 +23,8 @@ fun Context.isAvailable(): Boolean {
 /**
  * Return [ConnectivityManager].
  */
-fun Context.getConnectivityManager(): ConnectivityManager {
-    return getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+fun getConnectivityManager(): ConnectivityManager {
+    return ContextProvider.globalContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 }
 
 /**
@@ -34,18 +34,18 @@ fun Context.getConnectivityManager(): ConnectivityManager {
  *
  * @return `true`: 是<br></br>`false`: 否
  */
-fun Context.isNetworkConnected(): Boolean {
+fun isNetworkConnected(): Boolean {
     val cm = getConnectivityManager()
     val activeNetworkInfo = cm.activeNetworkInfo
     return activeNetworkInfo != null && activeNetworkInfo.isConnected
 }
 
-fun Context.isWifiConnected(): Boolean {
+fun isWifiConnected(): Boolean {
     val cm = getConnectivityManager()
     return cm.activeNetworkInfo.type == ConnectivityManager.TYPE_WIFI
 }
 
-fun Context.isMobileDataConnected(): Boolean {
+fun isMobileDataConnected(): Boolean {
     val cm = getConnectivityManager()
     return cm.activeNetworkInfo.type == ConnectivityManager.TYPE_MOBILE
 }

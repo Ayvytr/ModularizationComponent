@@ -1,6 +1,6 @@
-package com.ayvytr.network.kotlin
+package com.ayvytr.network.interceptor
 
-import android.content.Context
+import com.ayvytr.network.isNetworkAvailable
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -9,7 +9,6 @@ import java.io.IOException
  * @author ayvytr
  */
 class HttpCacheInterceptor @JvmOverloads constructor(
-    private val context: Context,
     private val maxStaleSeconds: Int = 3600
 ) : Interceptor {
 
@@ -24,9 +23,12 @@ class HttpCacheInterceptor @JvmOverloads constructor(
             return chain.proceed(chain.request())
         }
 
-        if (context.isAvailable()) {
-            return chain.proceed(chain.request())
-        } else { // 如果没有网络，则返回缓存未过期一个月的数据
+        if (isNetworkAvailable()) {
+            val newRequest = chain.request().newBuilder()
+                .removeHeader("Pragma")
+                .addHeader("Cache-Control", "max-age=$maxStaleSeconds").build()
+            return chain.proceed(newRequest)
+        } else { // 如果没有网络，则返回缓存未过期的数据
             val newRequest = chain.request().newBuilder()
                 .removeHeader("Pragma")
                 .header("Cache-Control", "only-if-cached, max-stale=$maxStaleSeconds")

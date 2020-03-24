@@ -1,8 +1,9 @@
-package com.ayvytr.network.kotlin
+package com.ayvytr.network.interceptor
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import com.ayvytr.commonlibrary.bean.BaseGank
+import com.ayvytr.network.ApiClient
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

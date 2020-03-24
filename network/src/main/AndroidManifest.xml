@@ -1,6 +1,12 @@
-<manifest package="com.ayvytr.network"
+<manifest package="com.ayvytr.network.interceptor"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application>
+        <provider
+            android:name="com.ayvytr.network.ContextProvider"
+            android:authorities="com.ayvytr.network.provider" />
+    </application>
 </manifest>

@@ -1,15 +1,15 @@
-package com.ayvytr.network.kotlin
+package com.ayvytr.network
 
-import android.content.Context
+import com.ayvytr.network.interceptor.CacheInterceptor
+import com.ayvytr.network.interceptor.CacheNetworkInterceptor
 import com.ayvytr.okhttploginterceptor.LoggingInterceptor
 import com.ayvytr.okhttploginterceptor.LoggingLevel
-import okhttp3.Cache
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
+import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 /**
@@ -27,23 +27,51 @@ class ApiClient private constructor() {
     @JvmOverloads
     fun init(
         baseUrl: String,
-        context: Context,
         hasCache: Boolean = false,
         cachePath: String = "",
-        cacheSize: Long = 1024 * 1024 * 64,
+        cacheSize: Long = 1024 * 1024 * 10,
         cacheMaxStaleSeconds: Int = 3600,
         interceptorList: List<Interceptor> = listOf()
     ) {
         val builder = OkHttpClient.Builder()
             .addInterceptor(LoggingInterceptor(LoggingLevel.SINGLE))
-            .addInterceptor(HttpCacheInterceptor(context, cacheMaxStaleSeconds))
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
 
         if (hasCache) {
-            val cache = Cache(File(cachePath), cacheSize)
+            val cache = Cache(File(ContextProvider.globalContext.cacheDir, "okhttp"), cacheSize)
             builder.cache(cache)
+//            builder.addInterceptor(HttpCacheInterceptor2())
+//                .addInterceptor(CacheInterceptor())
+//                .addNetworkInterceptor(CacheNetworkInterceptor())
+//                .addInterceptor(HttpCacheInterceptor(cacheMaxStaleSeconds))
+                .addInterceptor { chain ->
+                    val originalRequest: Request = chain.request()
+                    val cacheHeaderValue = if (isNetworkAvailable()) "public, max-age=2419200" else "public, only-if-cached, max-stale=2419200"
+                    val request: Request = originalRequest.newBuilder().build()
+                    val response: Response = chain.proceed(request)
+                    response.newBuilder()
+                        .removeHeader("Pragma")
+                        .removeHeader("Cache-Control")
+                        .header("Cache-Control", cacheHeaderValue)
+                        .build()
+                }
+                .addNetworkInterceptor(object : Interceptor {
+                    @kotlin.jvm.Throws(/*@@ntzmll@@*/IOException::class)
+                    override open fun /*@@jpakex@@*/intercept(
+                        chain:/*@@gubixf@@*/Interceptor.Chain): /*@@joltpp@@*/Response? {
+                        val originalRequest: /*@@omcgos@@*/Request = chain.request()
+                        val cacheHeaderValue: /*@@xdcpbx@@*/kotlin.String? = if (isNetworkAvailable()) "public, max-age=2419200" else "public, only-if-cached, max-stale=2419200"
+                        val request: /*@@whzmvc@@*/Request = originalRequest.newBuilder().build()
+                        val response: /*@@dozrjl@@*/Response = chain.proceed(request)
+                        return response.newBuilder()
+                            .removeHeader("Pragma")
+                            .removeHeader("Cache-Control")
+                            .header("Cache-Control", cacheHeaderValue)
+                            .build()
+                    }
+                })
         }
 
         interceptorList.map {
@@ -90,7 +118,7 @@ class ApiClient private constructor() {
     }
 
     companion object {
-        fun getInstance():ApiClient {
+        fun getInstance(): ApiClient {
             return SingletonHolder.NETWORK
         }
 //        val instance: ApiClient

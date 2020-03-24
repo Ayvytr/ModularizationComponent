@@ -1,4 +1,4 @@
-package com.ayvytr.network.kotlin;
+package com.ayvytr.network.interceptor;
 
 import org.junit.Test;
 

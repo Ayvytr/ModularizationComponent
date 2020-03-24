@@ -1,4 +1,4 @@
-package com.ayvytr.network.kotlin
+package com.ayvytr.network
 
 import retrofit2.Call
 import retrofit2.Callback
