@@ -1,4 +1,4 @@
-package com.ayvytr.network
+package com.ayvytr.network.provider
 
 import android.content.ContentProvider
 import android.content.ContentValues

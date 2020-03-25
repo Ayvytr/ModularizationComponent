@@ -2,6 +2,7 @@ package com.ayvytr.network
 
 import android.content.Context
 import android.net.ConnectivityManager
+import com.ayvytr.network.provider.ContextProvider
 
 /**
  * @author ayvytr

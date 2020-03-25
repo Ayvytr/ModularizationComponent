@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ApiClient.getInstance().init("https://gank.io/api/", true)
+        ApiClient.getInstance().init("https://gank.io/api/")
         gank = ApiClient.getInstance().create(Gank::class.java)
 
         tv = findViewById<TextView>(R.id.tv)
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
             requestData()
         }
 
+        L.e(cacheDir.absolutePath)
         requestData()
     }
 

@@ -2,17 +2,20 @@ package com.ayvytr.network
 
 import com.ayvytr.network.interceptor.CacheInterceptor
 import com.ayvytr.network.interceptor.CacheNetworkInterceptor
+import com.ayvytr.network.provider.ContextProvider
 import com.ayvytr.okhttploginterceptor.LoggingInterceptor
 import com.ayvytr.okhttploginterceptor.LoggingLevel
-import okhttp3.*
+import okhttp3.Cache
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 /**
+ * Entry class of Retrofit, use [ApiClient.getInstance] init.
  * @author ayvytr
  */
 class ApiClient private constructor() {
@@ -24,54 +27,28 @@ class ApiClient private constructor() {
 
     private val retrofitMap: HashMap<String, Retrofit> = hashMapOf()
 
+    /**
+     * @param cache if null, no cache
+     */
     @JvmOverloads
     fun init(
         baseUrl: String,
-        hasCache: Boolean = false,
-        cachePath: String = "",
-        cacheSize: Long = 1024 * 1024 * 10,
-        cacheMaxStaleSeconds: Int = 3600,
-        interceptorList: List<Interceptor> = listOf()
+        okHttpTimeoutSeconds: Int = 10,
+        interceptorList: List<Interceptor> = listOf(),
+        cache: Cache? = DEFAULT_CACHE,
+        cacheMaxAgeSeconds: Int = 3600
     ) {
+        val longOkHttpTimeoutSeconds = okHttpTimeoutSeconds.toLong()
         val builder = OkHttpClient.Builder()
             .addInterceptor(LoggingInterceptor(LoggingLevel.SINGLE))
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(longOkHttpTimeoutSeconds, TimeUnit.SECONDS)
+            .readTimeout(longOkHttpTimeoutSeconds, TimeUnit.SECONDS)
+            .writeTimeout(longOkHttpTimeoutSeconds, TimeUnit.SECONDS)
 
-        if (hasCache) {
-            val cache = Cache(File(ContextProvider.globalContext.cacheDir, "okhttp"), cacheSize)
+        if (cache != null) {
             builder.cache(cache)
-//            builder.addInterceptor(HttpCacheInterceptor2())
-//                .addInterceptor(CacheInterceptor())
-//                .addNetworkInterceptor(CacheNetworkInterceptor())
-//                .addInterceptor(HttpCacheInterceptor(cacheMaxStaleSeconds))
-                .addInterceptor { chain ->
-                    val originalRequest: Request = chain.request()
-                    val cacheHeaderValue = if (isNetworkAvailable()) "public, max-age=2419200" else "public, only-if-cached, max-stale=2419200"
-                    val request: Request = originalRequest.newBuilder().build()
-                    val response: Response = chain.proceed(request)
-                    response.newBuilder()
-                        .removeHeader("Pragma")
-                        .removeHeader("Cache-Control")
-                        .header("Cache-Control", cacheHeaderValue)
-                        .build()
-                }
-                .addNetworkInterceptor(object : Interceptor {
-                    @kotlin.jvm.Throws(/*@@ntzmll@@*/IOException::class)
-                    override open fun /*@@jpakex@@*/intercept(
-                        chain:/*@@gubixf@@*/Interceptor.Chain): /*@@joltpp@@*/Response? {
-                        val originalRequest: /*@@omcgos@@*/Request = chain.request()
-                        val cacheHeaderValue: /*@@xdcpbx@@*/kotlin.String? = if (isNetworkAvailable()) "public, max-age=2419200" else "public, only-if-cached, max-stale=2419200"
-                        val request: /*@@whzmvc@@*/Request = originalRequest.newBuilder().build()
-                        val response: /*@@dozrjl@@*/Response = chain.proceed(request)
-                        return response.newBuilder()
-                            .removeHeader("Pragma")
-                            .removeHeader("Cache-Control")
-                            .header("Cache-Control", cacheHeaderValue)
-                            .build()
-                    }
-                })
+                .addInterceptor(CacheInterceptor(cacheMaxAgeSeconds))
+                .addNetworkInterceptor(CacheNetworkInterceptor(cacheMaxAgeSeconds))
         }
 
         interceptorList.map {
@@ -118,11 +95,13 @@ class ApiClient private constructor() {
     }
 
     companion object {
+        @JvmField
+        val DEFAULT_CACHE: Cache = Cache(File(ContextProvider.globalContext.externalCacheDir, "okhttp"), 1024 * 1024 * 64)
+
+        @JvmStatic
         fun getInstance(): ApiClient {
             return SingletonHolder.NETWORK
         }
-//        val instance: ApiClient
-//            get() = SingletonHolder.NETWORK
     }
 }
 

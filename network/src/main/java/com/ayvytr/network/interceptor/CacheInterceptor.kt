@@ -11,26 +11,15 @@ import java.util.concurrent.TimeUnit
 internal class CacheInterceptor(val maxAgeSeconds: Int = 3600) : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        val response: Response
-        val request: Request = if (isNetworkAvailable()) {
-            //有网络,检查缓存
-            chain.request()
-                .newBuilder()
-                .cacheControl(CacheControl.Builder()
-                                  .maxAge(maxAgeSeconds, TimeUnit.SECONDS)
-                                  .build())
-                .build()
-        } else {
-            //无网络,检查缓存,即使是过期的缓存（这里和maxAge一致，有需要再改）
-            chain.request().newBuilder()
-                .cacheControl(CacheControl.Builder()
-                                  .onlyIfCached()
-                                  .maxStale(maxAgeSeconds, TimeUnit.SECONDS)
-                                  .build())
-                .build()
-        }
-
-        response = chain.proceed(request)
-        return response.newBuilder().build()
+        val originalRequest: Request = chain.request()
+        val cacheHeaderValue = if (isNetworkAvailable()) "public, max-age=$maxAgeSeconds"
+                                else "public, only-if-cached, max-stale=$maxAgeSeconds"
+        val request: Request = originalRequest.newBuilder().build()
+        val response: Response = chain.proceed(request)
+        return response.newBuilder()
+            .removeHeader("Pragma")
+            .removeHeader("Cache-Control")
+            .header("Cache-Control", cacheHeaderValue)
+            .build()
     }
 }

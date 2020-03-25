@@ -6,7 +6,7 @@
 
     <application>
         <provider
-            android:name="com.ayvytr.network.ContextProvider"
+            android:name="com.ayvytr.network.provider.ContextProvider"
             android:authorities="com.ayvytr.network.provider" />
     </application>
 </manifest>
