@@ -41,3 +41,9 @@ dependencies {
     androidTestImplementation deps.test.testRunner
     androidTestImplementation deps.test.espresso
 }
+
+if (enableMavenPush) {
+//    dokka网络问题未解决，直接使用Java的maven_push打包
+//    apply from: '../kotlin_maven_push.gradle'
+    apply from: '../maven_push.gradle'
+}

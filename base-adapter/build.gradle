@@ -26,5 +26,5 @@ dependencies {
 }
 
 if (enableMavenPush) {
-    apply from: 'https://raw.github.com/Ayvytr/KotlinJavadocMavenPush/master/maven_push.gradle'
+//    apply from: 'https://raw.githubusercontent.com/Ayvytr/GlobalConfig/master/gradle/maven_push.gradle'
 }
