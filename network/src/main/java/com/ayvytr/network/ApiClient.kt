@@ -1,5 +1,6 @@
 package com.ayvytr.network
 
+import android.os.Environment
 import com.ayvytr.network.interceptor.CacheInterceptor
 import com.ayvytr.network.interceptor.CacheNetworkInterceptor
 import com.ayvytr.network.provider.ContextProvider
@@ -97,7 +98,18 @@ class ApiClient private constructor() {
 
     companion object {
         @JvmField
-        val DEFAULT_CACHE: Cache = Cache(File(ContextProvider.globalContext.externalCacheDir, "okhttp"), 1024 * 1024 * 64)
+        val DEFAULT_CACHE: Cache = Cache(File(getDiskCacheDir(), "okhttp"), 1024 * 1024 * 64)
+
+        @JvmStatic
+        fun getDiskCacheDir(): File {
+            val context = ContextProvider.globalContext
+            return if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState() ||
+                    !Environment.isExternalStorageRemovable()) {
+                context.externalCacheDir!!
+            } else {
+                context.cacheDir
+            }
+        }
 
         @JvmStatic
         fun getInstance(): ApiClient {

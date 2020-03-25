@@ -1,6 +1,7 @@
 package com.ayvytr.app
 
 import android.os.Bundle
+import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.ProgressBar
@@ -39,6 +40,8 @@ class MainActivity : AppCompatActivity() {
 
         L.e(cacheDir.absolutePath)
         requestData()
+
+        Environment.getExternalStorageState()
     }
 
     private fun requestData() {
