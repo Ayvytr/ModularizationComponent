@@ -15,7 +15,8 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 /**
- * Entry class of Retrofit, use [ApiClient.getInstance] init.
+ * Entry class of this library, use [ApiClient.getInstance] init, default, OkHttp has 10 seconds
+ * timeout, default cache, and default cache max age by 3600 seconds.
  * @author ayvytr
  */
 class ApiClient private constructor() {
