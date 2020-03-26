@@ -31,7 +31,7 @@ dependencies {
 
     implementation deps.kotlin.kotlin_jdk7
 
-    implementation deps.okhttp3
+    implementation deps.okhttp
     implementation deps.retrofit
     implementation deps.retrofit_converter_gson
     implementation deps.retrofit_converter_scalars
